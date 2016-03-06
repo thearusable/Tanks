@@ -16,13 +16,13 @@ MyWindow::MyWindow(VideoMode Mode, const std::string &Title)
 
 MyWindow::~MyWindow(){}
 
-bool MyWindow::initialize(){
+BOOL MyWindow::initialize(){
 	FPS.setCharacterSize(30);
 	FPS.setColor(sf::Color::Yellow);
 	FPS.setFont(DATABASE.get(arus::Font::DisposableDroid));
 	FPS.setPosition(10,5);
 
-	bool b = QueryPerformanceFrequency(&timeFrequency);
+	BOOL b = QueryPerformanceFrequency(&timeFrequency);
 	if (!b)
 		return false;
 	return QueryPerformanceCounter(&timeLastFrame);

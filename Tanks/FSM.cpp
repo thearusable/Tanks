@@ -24,12 +24,13 @@ void FSM::setCurrentState(int iStateID){
 State& FSM::getState(int iStateID){
 	StateMap::iterator it;
 
-	if (!m_map.empty()){
-		it = m_map.find(iStateID);
-		if (it != m_map.end()){
-			return (*it).second;
-		}
-	}
+	//if (!m_map.empty()){
+	//	it = m_map.find(iStateID);
+	//	if (it != m_map.end()){
+	//		return (*it).second;
+	//	}
+	//}
+	return State(1,2);
 }
 
 void FSM::addState(State& pNewState){
@@ -58,12 +59,12 @@ void FSM::deleteState(int iStateID){
 
 int FSM::stateTransition(int iInput){
 
-	State& pState = getState(m_iCurrentState);
-	if (pState == nullptr){
-		m_iCurrentState = 0;
-		return m_iCurrentState;
-	}
+	State pState = getState(m_iCurrentState);
+	//if (pState == nullptr){
+	//	m_iCurrentState = 0;
+	//	return m_iCurrentState;
+	//}
 
-	m_iCurrentState = pState->getOutput(iInput);
+	//m_iCurrentState = pState->getOutput(iInput);
 	return m_iCurrentState;
 }

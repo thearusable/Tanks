@@ -1,7 +1,6 @@
 #ifndef ARUS_H
 #define ARUS_H
 #pragma once
-//#include<SFML/Graphics.hpp>
 
 namespace arus{
 	enum class Direction{

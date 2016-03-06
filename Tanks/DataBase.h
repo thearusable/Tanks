@@ -3,6 +3,8 @@
 #pragma once
 
 #include<SFML/Audio/Sound.hpp>
+#include<SFML/Graphics/Texture.hpp>
+#include<SFML/Graphics/Font.hpp>
 #include<iostream>
 #include<fstream>
 #include"arus.h"

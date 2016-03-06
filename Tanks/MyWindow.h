@@ -20,7 +20,7 @@ public:
 	void setDisplayFPS(bool b);
 	float timeElapsedLastFrame();
 protected:
-	bool initialize();
+	BOOL initialize();
 
 	Text FPS;
 	LARGE_INTEGER timeFrequency;

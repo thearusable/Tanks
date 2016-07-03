@@ -6,7 +6,63 @@
 
 DataBase DATABASE;
 
+#include "lua\lua.hpp"
+
+//lua function test
+int LUA_Test(lua_State *S)
+{
+	//odczytanie ze stosu
+	float x = lua_tonumber(S, 1);
+	//wrzucenie wyniku na stos
+	lua_pushnumber(S,x*x*x);
+	//ile obiektów zwróci
+	return 1;
+}
+
+class Object {
+public:
+	int x = 10;
+};
+
+int LUA_CreateObject(lua_State *S) {
+	//wrzucenie wskaznika na stos
+	lua_pushlightuserdata(S, new Object());
+	return 1;
+}
+
+int LUA_DestroyObject(lua_State *S) {
+	//odczytanie ze stosu
+	Object * p = (Object *)lua_touserdata(S, 1);
+	if (p) {
+		delete p;
+	}
+	return 0;
+}
+
+int LUA_GetObjectData(lua_State *S) {
+	Object * p = (Object *)lua_touserdata(S, 1);
+	if (p) {
+		lua_pushnumber(S, p->x);
+	}
+	return 1;
+}
+
+
 void main(){
+
+
+	//lua test
+	lua_State *S = luaL_newstate();
+	luaL_openlibs(S);
+	//registers
+	lua_register(S, "doTrzeciej", LUA_Test);
+	lua_register(S, "CreateObject", LUA_CreateObject);
+	lua_register(S, "DestroyObject", LUA_DestroyObject);
+	lua_register(S, "GetObjectData", LUA_GetObjectData);
+
+	luaL_loadfile(S, "test.lua");
+	lua_call(S, 0, 0);
+
 	try{
 		DATABASE.loadFont();
 	}

@@ -42,7 +42,7 @@ void FSM::addState(State& pNewState){
 			return;
 	}
 
-	m_map.insert(std::make_pair(pNewState.getID(), pNewState));
+	//m_map.insert(pNewState.getID(), pNewState);
 }
 
 void FSM::deleteState(int iStateID){

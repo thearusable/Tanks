@@ -17,6 +17,10 @@ AnimateElement::AnimateElement(arus::Textures t, sf::Vector2f pos, sf::Vector2f 
 }
 
 bool AnimateElement::update(){
+	if (this == nullptr) {
+		return true;
+	}
+
 	if (colldown <= 0){
 		colldown = timeToChange;
 		whichFrame++;

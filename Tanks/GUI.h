@@ -23,6 +23,7 @@ protected:
 	sf::Text hScore[2];
 
 	MyWindow& target;
+	Stats& stats;
 };
 
 #endif

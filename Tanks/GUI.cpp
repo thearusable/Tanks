@@ -3,10 +3,10 @@
 #include"DataBase.h"
 
 extern DataBase DATABASE;
-Stats& stats = DATABASE.get();
 
 GUI::GUI(MyWindow& tar)
 	:target(tar)
+	, stats(DATABASE.getStats())
 	, flaga()
 	, tank_icon()
 	, player1()
@@ -36,20 +36,20 @@ GUI::GUI(MyWindow& tar)
 	Teksty[0].setString(tex[0]); //Enemy
 	Teksty[0].setPosition(750, 100);
 	tank_icon[0].setPosition(750, 140 + x);
-	Teksty[1].setString(std::to_string(DATABASE.get().enemyCount)); //ilosc przeciwnikow
+	Teksty[1].setString(std::to_string(stats.enemyCount)); //ilosc przeciwnikow
 	Teksty[1].setPosition(780, 135);
 	Teksty[2].setString(tex[1]); //1 gracz
 	Teksty[2].setPosition(750, 300);
 	tank_icon[1].setPosition(750, 340 + x);
-	Teksty[3].setString(std::to_string(DATABASE.get().p1LIVES)); //zycia 1 gracza
+	Teksty[3].setString(std::to_string(stats.p1LIVES)); //zycia 1 gracza
 	Teksty[3].setPosition(780, 335);
 	flaga.setPosition(750, 585);
-	Teksty[4].setString(std::to_string(DATABASE.get().displayedLevel)); //numer rundy
+	Teksty[4].setString(std::to_string(stats.displayedLevel)); //numer rundy
 	Teksty[4].setPosition(780, 600);
 	Teksty[5].setString(tex[2]); //2 gracz
 	Teksty[5].setPosition(750, 380);
 	tank_icon[2].setPosition(750, 420 + x);
-	Teksty[6].setString(std::to_string(DATABASE.get().p2LIVES)); //zycia 2 gracza
+	Teksty[6].setString(std::to_string(stats.p2LIVES)); //zycia 2 gracza
 	Teksty[6].setPosition(780, 415);
 
 	for (sf::Text& t : player1){
@@ -135,10 +135,10 @@ GUI::GUI(MyWindow& tar)
 
 void GUI::update(const bool& isTwoPlayers, const bool& mapCompleted, const bool& isSummary){
 	if (!mapCompleted){
-		Teksty[1].setString(std::to_string(DATABASE.get().enemyCount)); //ilosc przeciwnikow
-		Teksty[3].setString(std::to_string(DATABASE.get().p1LIVES)); //zycia 1 gracza
-		Teksty[4].setString(std::to_string(DATABASE.get().displayedLevel)); //numer rundy
-		Teksty[6].setString(std::to_string(DATABASE.get().p2LIVES)); //zycia 2 gracza
+		Teksty[1].setString(std::to_string(stats.enemyCount)); //ilosc przeciwnikow
+		Teksty[3].setString(std::to_string(stats.p1LIVES)); //zycia 1 gracza
+		Teksty[4].setString(std::to_string(stats.displayedLevel)); //numer rundy
+		Teksty[6].setString(std::to_string(stats.p2LIVES)); //zycia 2 gracza
 	}
 	else{
 		if (isSummary == false){
@@ -189,7 +189,7 @@ void GUI::update(const bool& isTwoPlayers, const bool& mapCompleted, const bool&
 			hScore[0].setString("HI-SCORE");
 			hScore[1].setString(std::to_string(t));
 
-			DATABASE.resetToDefaultStats();
+			stats.resetToDefaultStats();
 		}
 	}
 }

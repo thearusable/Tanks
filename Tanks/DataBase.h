@@ -25,6 +25,30 @@ struct Stats
 	bool isCustomMap; //czy byla tworzona mapa
 
 	unsigned short e1p1, e2p1, e3p1, e4p1, e1p2, e2p2, e3p2, e4p2; //liczba zabitych wrogow
+
+	//zakonczenie poziomu
+	void afterCompleteLvl() {
+		currLevel++;
+		displayedLevel++;
+		enemyCount = 20;
+		e1p1 = e1p2 = e2p1 = e2p2 = e3p1 = e3p2 = e4p1 = e4p2 = 0;
+	}
+	//zresetowanie opcji
+	void resetToDefaultStats() {
+		//Player1
+		p1LIVES = 3;
+		p1POINTS = 0;
+		//Player2
+		p2LIVES = 3;
+		p2POINTS = 0;
+		//inne
+		displayedLevel = 1;		//ilosc map
+		currLevel = 1;			//indeks obecnej mapy
+		enemyCount = 20;		//ilosc wszystkich przeciwnikow
+		isCustomMap = false;	//czy byla tworzona mapa
+								  
+		e1p1 = e1p2 = e2p1 = e2p2 = e3p1 = e3p2 = e4p1 = e4p2 = 0;	//liczba zabitych wrogow
+	}
 };
 
 class DataBase
@@ -33,19 +57,12 @@ public:
 	void loadFont();
 	void load();
 
-	//zakonczenie poziomu
-	void afterCompleteLvl();
-	//zresetowanie opcji
-	void resetToDefaultStats();
-
 	//using to get texture (param: arus::Textures)
 	sf::Texture& get(arus::Textures t);
 	//using to get font (param: arus::Font)
 	sf::Font& get(arus::Font f);
-	//using to get std::string (param: int)
-	std::string& get(unsigned int i);
 	//using to get Configuration
-	Stats& get();
+	Stats& getStats();
 
 private:
 	void loadResources(); //ladowanie zasobow

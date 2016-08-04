@@ -10,7 +10,7 @@ Menu::Menu(MyWindow& window)
 	, currenltyChoosed(0)
 {
 
-	std::string s[4] = { "Jeden Gracz", "Dwoch Graczy", "Tryb Budowy", "Wyjscie" };
+	std::string s[4] = { "One Player", "Two Players", "Construction", "Exit" };
 
 	logo.setPosition((window.getSize().x / 2.f) - logo.getLocalBounds().width / 2.f, window.getSize().y * 0.1f);
 
@@ -73,6 +73,16 @@ void Menu::render(){
 	target.display();
 }
 void Menu::choose(){
+	if (DATABASE.getStats().isCustomMap == true)
+	{
+		DATABASE.getStats().resetToDefaultStats();
+		DATABASE.getStats().isCustomMap = true;
+		DATABASE.getStats().currLevel = 0;
+	} else {
+		DATABASE.getStats().resetToDefaultStats();
+	}
+	
+
 	if (currenltyChoosed == 0){ // 1
 		Game game(target);
 		game.run();

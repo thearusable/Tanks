@@ -3,7 +3,7 @@
 #include"Level.h"
 #include"Bullet.h"
 #include"Player.h"
-//#include"Enemy.h"
+#include"Enemy.h"
 #include"PowerUp.h"
 #include"GUI.h"
 
@@ -35,7 +35,7 @@ protected:
 	MyWindow& target;
 	Level Poziom;
 	Player Gracz1, Gracz2;
-	//std::vector<Enemy*> EnemyHolder;
+	std::vector<Enemy*> EnemyHolder;
 	std::vector<Bullet*> BulletHolder;
 	std::vector<int> BulletsToDestroy;
 	std::vector<int> EnemyToDestroy;
@@ -43,14 +43,10 @@ protected:
 	std::vector<AnimateElement *> AnimetedElements;
 	AnimateElement * SpawnPoints[5];
 	bool PointsToSpawn[3];
-
 	bool isTwoPlayers, isGameOver, isSummary, mapCompleted;//
 	
 	int EnemyToSpawn, numerPoziomu;
-	//info po prawej
-
-	Stats& stats;
-
 	
+	Stats& stats;
 };
 

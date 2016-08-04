@@ -171,6 +171,9 @@
     <ClCompile Include="lua\lzio.c">
       <Filter>lua</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataBase.h">
@@ -304,6 +307,9 @@
     </ClInclude>
     <ClInclude Include="lua\lzio.h">
       <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

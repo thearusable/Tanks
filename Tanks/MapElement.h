@@ -28,6 +28,7 @@ public:
 	//Node do obliczen A*
 	void initNode();
 	void setIndex(int xx, int yy);
+	sf::Vector2i getIndex();
 	MapElement* getParent();
 	void setParent(MapElement* p);
 
@@ -43,12 +44,13 @@ public:
 	bool operator==(MapElement* p);
 
 	int x, y;
-
+	bool inOpenList, inClosedList;
+	bool mustDestroy = false;
 protected:
 	bool canCollidedWithTank, canCollidedWithBullet;
 	arus::bulletType minimalBulletType;
 	//Node do obliczen A*
-	bool inOpenList, inClosedList;
+	
 	MapElement* parent; // tego pewnie tu nie bedzie
 	int f, g, h;
 	bool canDestroy;

@@ -4,12 +4,12 @@ extern DataBase DATABASE;
 
 Game::Game(MyWindow& window, bool TwoPlayers)
 	:target(window)
+	, stats(DATABASE.getStats())
 	, gui(window)
 	, Poziom()
 	, isTwoPlayers(TwoPlayers)
 	, isGameOver(false)
 	, mapCompleted(false)
-	, stats(DATABASE.get())
 	, isSummary(false)
 	, Gracz1(arus::bulletType::normal)
 	, Gracz2(arus::bulletType::normal, false)
@@ -40,11 +40,11 @@ Game::Game(MyWindow& window, bool TwoPlayers)
 }
 
 void Game::run(){
-	Poziom.loadMap(DATABASE.get().currLevel);/////
-	//EnemyHolder.clear();
-	//createSpawnAnimation(0);
-	//createSpawnAnimation(1);
-	//createSpawnAnimation(2);
+	Poziom.loadMap(stats.currLevel);/////
+	EnemyHolder.clear();
+	createSpawnAnimation(0);
+	createSpawnAnimation(1);
+	createSpawnAnimation(2);
 	PointsToSpawn[0] = PointsToSpawn[1] = PointsToSpawn[2] = true;
 
 	while (target.isOpen() && !isGameOver){
@@ -56,21 +56,27 @@ void Game::run(){
 }
 
 void Game::nextMap(){
-	DATABASE.afterCompleteLvl();
-	Poziom.loadMap(DATABASE.get().currLevel);
+
+	isSummary = false;
+	mapCompleted = false;
+
+	stats.afterCompleteLvl();
+	Poziom.loadMap(stats.currLevel);
+
 	Gracz1.resetPlayer();
 	if (isTwoPlayers) Gracz2.resetPlayer();
-	//EnemyHolder.clear();
+	
 	BulletHolder.clear();
 	BulletsToDestroy.clear();
 	EnemyToDestroy.clear();
 
-	//EnemyHolder.clear();
-	//EnemyToSpawn = 3;
-	//createSpawnAnimation(0);
-	//createSpawnAnimation(1);
-	//createSpawnAnimation(2);
+	EnemyHolder.clear();
+	EnemyToSpawn = 3;
+	createSpawnAnimation(0);
+	createSpawnAnimation(1);
+	createSpawnAnimation(2);
 	PointsToSpawn[0] = PointsToSpawn[1] = PointsToSpawn[2] = true;
+
 }
 
 void Game::events(){
@@ -82,7 +88,7 @@ void Game::events(){
 			if (e.key.code == sf::Keyboard::Escape ||
 				(e.key.code == sf::Keyboard::Return || e.key.code == sf::Keyboard::Escape || e.key.code == sf::Keyboard::Space) && isSummary == true){
 				isGameOver = true;
-				DATABASE.resetToDefaultStats();
+				stats.resetToDefaultStats();
 			}
 			if (e.key.code == sf::Keyboard::T){ //ukonczenie lvla
 				powerUp.create();
@@ -99,8 +105,6 @@ void Game::events(){
 				mapCompleted = true;
 			}
 			if ((e.key.code == sf::Keyboard::Space || e.key.code == sf::Keyboard::Return) && mapCompleted == true){ //ukonczenie lvla
-				isSummary = false;
-				mapCompleted = false;
 				this->nextMap();
 			}
 			break;
@@ -140,16 +144,11 @@ void Game::events(){
 
 void Game::update(){
 
-	//for(Enemy* e : EnemyHolder){
-	//	if(e != nullptr){
-	//		e->update(deltaTime);
-	//	}
-	//}
-
-	//for (int i = 0; i < EnemyHolder.size(); ++i){
-	//	if (EnemyHolder[i] != nullptr)
-	//		EnemyHolder[i]->update(deltaTime);
-	//}
+	for(Enemy* e : EnemyHolder){
+		if(e != nullptr){
+			e->update(target.timeElapsedLastFrame());
+		}
+	}
 
 	this->Gracz1.update(target.timeElapsedLastFrame());
 	if (isTwoPlayers){
@@ -160,12 +159,12 @@ void Game::update(){
 		if (b != nullptr) b->update();
 	}
 
-	//if (DATABASE.get().enemyCount <= 0){
-	//	if (EnemyHolder.size() == 0) {
-	//		mapCompleted = true;
-	//		powerUp.take();
-	//	}
-	//}
+	if (stats.enemyCount <= 0){
+		if (EnemyHolder.size() == 0) {
+			mapCompleted = true;
+			powerUp.take();
+		}
+	}
 	if (stats.p1LIVES == 0){
 		if (isTwoPlayers && stats.p2LIVES == 0){
 			isSummary = true;
@@ -174,39 +173,39 @@ void Game::update(){
 		}
 	}
 	//spawny
-	//if (PointsToSpawn[0] == true){//spawn przeciwnika po lewej
-	//	if (SpawnPoints[0] == nullptr) {
-	//		createSpawnAnimation(0);
-	//		stats.enemyCount--;
-	//	}
-	//	if (SpawnPoints[0]->update() == true){
-	//		EnemyHolder.push_back(new Enemy(Poziom, 0, 0, 0));
-	//		SpawnPoints[0] = nullptr;
-	//		PointsToSpawn[0] = false;
-	//	}
-	//}
-	//if (PointsToSpawn[1] == true){//spawn przeciwnika na srodku
-	//	if (SpawnPoints[1] == nullptr) {
-	//		createSpawnAnimation(1);
-	//		conf.enemyCount--;
-	//	}
-	//	if (SpawnPoints[1]->update() == true){
-	//		EnemyHolder.push_back(new Enemy(Poziom, 6, 0, 1));
-	//		SpawnPoints[1] = nullptr;
-	//		PointsToSpawn[1] = false;
-	//	}
-	//}
-	//if (PointsToSpawn[2] == true){//spawn przeciwnika po prawej
-	//	if (SpawnPoints[2] == nullptr){
-	//		createSpawnAnimation(2);
-	//		conf.enemyCount--;
-	//	}
-	//	if (SpawnPoints[2]->update() == true){
-	//		EnemyHolder.push_back(new Enemy(Poziom, 12, 0, 2));
-	//		SpawnPoints[2] = nullptr;
-	//		PointsToSpawn[2] = false;
-	//	}
-	//}
+	if (PointsToSpawn[0] == true){//spawn przeciwnika po lewej
+		if (SpawnPoints[0] == nullptr) {
+			createSpawnAnimation(0);
+			stats.enemyCount--;
+		}
+		if (SpawnPoints[0]->update() == true){
+			EnemyHolder.push_back(new Enemy(Poziom, 0, 0, 0));
+			SpawnPoints[0] = nullptr;
+			PointsToSpawn[0] = false;
+		}
+	}
+	if (PointsToSpawn[1] == true){//spawn przeciwnika na srodku
+		if (SpawnPoints[1] == nullptr) {
+			createSpawnAnimation(1);
+			stats.enemyCount--;
+		}
+		if (SpawnPoints[1]->update() == true){
+			EnemyHolder.push_back(new Enemy(Poziom, 6, 0, 1));
+			SpawnPoints[1] = nullptr;
+			PointsToSpawn[1] = false;
+		}
+	}
+	if (PointsToSpawn[2] == true){//spawn przeciwnika po prawej
+		if (SpawnPoints[2] == nullptr){
+			createSpawnAnimation(2);
+			stats.enemyCount--;
+		}
+		if (SpawnPoints[2]->update() == true){
+			EnemyHolder.push_back(new Enemy(Poziom, 12, 0, 2));
+			SpawnPoints[2] = nullptr;
+			PointsToSpawn[2] = false;
+		}
+	}
 
 	if (SpawnPoints[3] != nullptr){//gracz1
 		if (SpawnPoints[3]->update() == true){
@@ -221,10 +220,9 @@ void Game::update(){
 		}
 	}
 
-	//for (unsigned int i = 0; i < EnemyHolder.size(); ++i){
-	//	if (EnemyHolder[i] == nullptr) EnemyHolder.erase(EnemyHolder.begin() + i);
-	//}
-	//std::cout<<"wielkosc vektora przeciwnikow: "<<EnemyHolder.size()<<std::endl;
+	for (unsigned int i = 0; i < EnemyHolder.size(); ++i){
+		if (EnemyHolder[i] == nullptr) EnemyHolder.erase(EnemyHolder.begin() + i);
+	}
 
 	for (unsigned int i = 0; i < AnimetedElements.size(); ++i){
 		if (AnimetedElements[i] != nullptr)
@@ -237,6 +235,8 @@ void Game::update(){
 }
 
 void Game::render(){
+	if (isGameOver) return;
+
 	if (mapCompleted == false){//rysowanie podczas gry
 
 		target.clear(sf::Color(125, 125, 125, 255));
@@ -252,9 +252,9 @@ void Game::render(){
 			Gracz2 >> target;
 		}
 
-		//for (Enemy* e : EnemyHolder){
-		//	if (e != nullptr) *e >> target;
-		//}
+		for (Enemy* e : EnemyHolder){
+			if (e != nullptr) *e >> target;
+		}
 
 		Poziom >> target;
 
@@ -399,56 +399,56 @@ void Game::collisions(){
 			}
 
 			//przeciwnicy
-			//for (unsigned int i = 0; i < EnemyHolder.size(); i++){
-			//	if (EnemyHolder[i] != nullptr){
-			//		if (checkCollision(BulletHolder[bCount]->getSprite(), EnemyHolder[i]->getSprite())){
-			//			BulletsToDestroy.push_back(bCount);
-			//			EnemyToDestroy.push_back(i);
-			//			//dodawanie punktow
-			//			//e1 - random
-			//			//e2 - normal
-			//			//e3 - heavy
-			//			//e4 - fast
-			//
-			//			if (BulletHolder[bCount]->isBulletFromFirstPlayer == 1){//P1
-			//				if (EnemyHolder[i]->Type == arus::EnemyType::fastEnemy) {
-			//					conf.e4p1++;
-			//					conf.P1POINTS += 400;
-			//				}
-			//				if (EnemyHolder[i]->Type == arus::EnemyType::heavyEnemy) {
-			//					conf.e3p1++;
-			//					conf.P1POINTS += 300;
-			//				}
-			//				if (EnemyHolder[i]->Type == arus::EnemyType::normalEnemy) {
-			//					conf.e2p1++;
-			//					conf.P1POINTS += 200;
-			//				}
-			//				if (EnemyHolder[i]->Type == arus::EnemyType::randomEnemy) {
-			//					conf.e1p1++;
-			//					conf.P1POINTS += 100;
-			//				}
-			//			}
-			//			else if (BulletHolder[bCount]->isBulletFromFirstPlayer == 2){
-			//				if (EnemyHolder[i]->Type == arus::EnemyType::fastEnemy) {
-			//					conf.e4p2++;
-			//					conf.P2POINTS += 400;
-			//				}
-			//				if (EnemyHolder[i]->Type == arus::EnemyType::heavyEnemy) {
-			//					conf.e3p2++;
-			//					conf.P2POINTS += 300;
-			//				}
-			//				if (EnemyHolder[i]->Type == arus::EnemyType::normalEnemy) {
-			//					conf.e2p2++;
-			//					conf.P2POINTS += 200;
-			//				}
-			//				if (EnemyHolder[i]->Type == arus::EnemyType::randomEnemy) {
-			//					conf.e1p2++;
-			//					conf.P2POINTS += 100;
-			//				}
-			//			}
-			//		}
-			//	}
-			//}
+			for (unsigned int i = 0; i < EnemyHolder.size(); i++){
+				if (EnemyHolder[i] != nullptr){
+					if (checkCollision(BulletHolder[bCount]->getSprite(), EnemyHolder[i]->getSprite())){
+						BulletsToDestroy.push_back(bCount);
+						EnemyToDestroy.push_back(i);
+						//dodawanie punktow
+						//e1 - random
+						//e2 - normal
+						//e3 - heavy
+						//e4 - fast
+			
+						if (BulletHolder[bCount]->bulletOwner == 1){//P1
+							if (EnemyHolder[i]->Type == arus::EnemyType::fast) {
+								stats.e4p1++;
+								stats.p1POINTS += 400;
+							}
+							if (EnemyHolder[i]->Type == arus::EnemyType::heavy) {
+								stats.e3p1++;
+								stats.p1POINTS += 300;
+							}
+							if (EnemyHolder[i]->Type == arus::EnemyType::normal) {
+								stats.e2p1++;
+								stats.p1POINTS += 200;
+							}
+							if (EnemyHolder[i]->Type == arus::EnemyType::random) {
+								stats.e1p1++;
+								stats.p1POINTS += 100;
+							}
+						}
+						else if (BulletHolder[bCount]->bulletOwner == 2){
+							if (EnemyHolder[i]->Type == arus::EnemyType::fast) {
+								stats.e4p2++;
+								stats.p2POINTS += 400;
+							}
+							if (EnemyHolder[i]->Type == arus::EnemyType::heavy) {
+								stats.e3p2++;
+								stats.p2POINTS += 300;
+							}
+							if (EnemyHolder[i]->Type == arus::EnemyType::normal) {
+								stats.e2p2++;
+								stats.p2POINTS += 200;
+							}
+							if (EnemyHolder[i]->Type == arus::EnemyType::random) {
+								stats.e1p2++;
+								stats.p2POINTS += 100;
+							}
+						}
+					}
+				}
+			}
 
 			//kule z kulami 
 			for (unsigned int bCountB = 0; bCountB < BulletHolder.size(); bCountB++){
@@ -479,16 +479,16 @@ void Game::collisions(){
 
 			}
 			//przeciwnicy
-			//if (Poziom.mTiledMap[rCountX][rCountY].getColliderBullet()){
-			//	for (unsigned int i = 0; i < EnemyHolder.size(); i++){
-			//		if (EnemyHolder[i] != nullptr){
-			//			if (checkCollision(EnemyHolder[i]->getSprite(), Poziom.mTiledMap[rCountX][rCountY].getSprite())){
-			//				EnemyHolder[i]->setFreezeDirection(EnemyHolder[i]->getDirection());
-			//				correctPosition(EnemyHolder[i]->getSprite(), EnemyHolder[i]->getDirection(), Poziom.mTiledMap[rCountX][rCountY].getSprite());
-			//			}
-			//		}
-			//	}
-			//}
+			if (Poziom.mTiledMap[rCountX][rCountY].getColliderBullet()){
+				for (unsigned int i = 0; i < EnemyHolder.size(); i++){
+					if (EnemyHolder[i] != nullptr){
+						if (checkCollision(EnemyHolder[i]->getSprite(), Poziom.mTiledMap[rCountX][rCountY].getSprite())){
+							EnemyHolder[i]->setFreezeDirection(EnemyHolder[i]->getDirection());
+							correctPosition(EnemyHolder[i]->getSprite(), EnemyHolder[i]->getDirection(), Poziom.mTiledMap[rCountX][rCountY].getSprite());
+						}
+					}
+				}
+			}
 		}
 	}
 	//z krawiedzia mapy
@@ -506,57 +506,57 @@ void Game::collisions(){
 			}
 		}
 		//przeciwnicy
-		//for (unsigned int i = 0; i < EnemyHolder.size(); i++){
-		//	if (EnemyHolder[i] != nullptr){
-		//		if (checkCollision(EnemyHolder[i]->getSprite(), Poziom.mEdge[i].getSprite())){
-		//			EnemyHolder[i]->setFreezeDirection(EnemyHolder[i]->getDirection());
-		//			correctPosition(EnemyHolder[i]->getSprite(), EnemyHolder[i]->getDirection(), Poziom.mEdge[i].getSprite());
-		//		}
-		//	}
-		//}
+		for (unsigned int i = 0; i < EnemyHolder.size(); i++){
+			if (EnemyHolder[i] != nullptr){
+				if (checkCollision(EnemyHolder[i]->getSprite(), Poziom.mEdge[i].getSprite())){
+					EnemyHolder[i]->setFreezeDirection(EnemyHolder[i]->getDirection());
+					correctPosition(EnemyHolder[i]->getSprite(), EnemyHolder[i]->getDirection(), Poziom.mEdge[i].getSprite());
+				}
+			}
+		}
 	}
 	//z powerUpem
-	//for (unsigned int i = 0; i < EnemyHolder.size(); i++){
-	//	if (EnemyHolder[i] != nullptr){
-	//		if (checkCollision(powerUp.getSprite(), EnemyHolder[i]->getSprite())){
-	//			if (powerUp.type == arus::PowerUp::granade){
-	//				Gracz1.resetPlayer();
-	//				if (isTwoPlayers) Gracz2.resetPlayer();
-	//				conf.P1LIVES--;
-	//				conf.P2LIVES--;
-	//			}
-	//			else if (powerUp.type == arus::PowerUp::life){
-	//				conf.enemyCount += 10;
-	//			}
-	//			else if (powerUp.type == arus::PowerUp::pistol){
-	//				EnemyHolder[i]->setBulletType(arus::bulletType::super);
-	//			}
-	//			else if (powerUp.type == arus::PowerUp::shield){
-	//				EnemyHolder[i]->setPowerUp(powerUp);
-	//			}
-	//			else if (powerUp.type == arus::PowerUp::speed){
-	//				EnemyHolder[i]->setSpeed(14.f);
-	//			}
-	//			else if (powerUp.type == arus::PowerUp::swim){
-	//				EnemyHolder[i]->setPowerUp(powerUp);
-	//			}
-	//			powerUp.take();
-	//		}
-	//	}
-	//}
+	for (unsigned int i = 0; i < EnemyHolder.size(); i++){
+		if (EnemyHolder[i] != nullptr){
+			if (checkCollision(powerUp.getSprite(), EnemyHolder[i]->getSprite())){
+				if (powerUp.getType() == arus::PowerUp::granade){
+					Gracz1.resetPlayer();
+					if (isTwoPlayers) Gracz2.resetPlayer();
+					stats.p1LIVES--;
+					stats.p2LIVES--;
+				}
+				else if (powerUp.getType() == arus::PowerUp::life){
+					stats.enemyCount += 10;
+				}
+				else if (powerUp.getType() == arus::PowerUp::pistol){
+					EnemyHolder[i]->setBulletType(arus::bulletType::super);
+				}
+				else if (powerUp.getType() == arus::PowerUp::shield){
+					EnemyHolder[i]->setPowerUp(powerUp);
+				}
+				else if (powerUp.getType() == arus::PowerUp::speed){
+					EnemyHolder[i]->setSpeed(14.f);
+				}
+				else if (powerUp.getType() == arus::PowerUp::swim){
+					EnemyHolder[i]->setPowerUp(powerUp);
+				}
+				powerUp.take();
+			}
+		}
+	}
 	if (checkCollision(powerUp.getSprite(), Gracz1.getSprite())){
 		if (powerUp.getType() == arus::PowerUp::granade){
 			EnemyToDestroy.clear();
-			//EnemyToSpawn = 3;
-			// PointsToSpawn[0] = PointsToSpawn[1] = PointsToSpawn[2] = true;
-			//for (unsigned i = 0; i < EnemyHolder.size(); i++){
-			//	if (EnemyHolder[i] != nullptr) EnemyToDestroy.push_back(i);
-			//	if (Data.get().enemyCount > 0){
-			//		int temp = EnemyHolder[EnemyToDestroy[i]]->spawnPoint;
-			//		PointsToSpawn[temp] = true;
-			//	}
-			//	//conf.enemyCount--;
-			//}
+			EnemyToSpawn = 3;
+			 PointsToSpawn[0] = PointsToSpawn[1] = PointsToSpawn[2] = true;
+			for (unsigned i = 0; i < EnemyHolder.size(); i++){
+				if (EnemyHolder[i] != nullptr) EnemyToDestroy.push_back(i);
+				if (stats.enemyCount > 0){
+					int temp = EnemyHolder[EnemyToDestroy[i]]->spawnPoint;
+					PointsToSpawn[temp] = true;
+				}
+				//conf.enemyCount--;
+			}
 		}
 		else if (powerUp.getType() == arus::PowerUp::life){
 			stats.p1LIVES++;
@@ -568,15 +568,15 @@ void Game::collisions(){
 		if (checkCollision(powerUp.getSprite(), Gracz2.getSprite())){
 			if (powerUp.getType() == arus::PowerUp::granade){
 				EnemyToDestroy.clear();
-				//if(Data.get().enemyCount > 2) PointsToSpawn[0] = PointsToSpawn[1] = PointsToSpawn[2] = true;
-				//for (unsigned i = 0; i < EnemyHolder.size(); i++){
-				//	if (EnemyHolder[i] != nullptr) EnemyToDestroy.push_back(i);
-				//	//conf.enemyCount--;
-				//	if (Data.get().enemyCount > 0){
-				//		int temp = EnemyHolder[EnemyToDestroy[i]]->spawnPoint;
-				//		PointsToSpawn[temp] = true;
-				//	}
-				//}
+				if(stats.enemyCount > 2) PointsToSpawn[0] = PointsToSpawn[1] = PointsToSpawn[2] = true;
+				for (unsigned i = 0; i < EnemyHolder.size(); i++){
+					if (EnemyHolder[i] != nullptr) EnemyToDestroy.push_back(i);
+					//conf.enemyCount--;
+					if (stats.enemyCount > 0){
+						int temp = EnemyHolder[EnemyToDestroy[i]]->spawnPoint;
+						PointsToSpawn[temp] = true;
+					}
+				}
 			}
 			else if (powerUp.getType() == arus::PowerUp::life){
 				stats.p2LIVES++;
@@ -598,14 +598,14 @@ void Game::collisions(){
 	BulletsToDestroy.clear();
 
 	//niszczenie przeciwnikow
-	//for (unsigned int i = 0; i < EnemyToDestroy.size(); i++){
-	//	//Data.get().enemyCount -= 1;
-	//	if (Data.get().enemyCount > 0) PointsToSpawn[EnemyHolder[EnemyToDestroy[i]]->spawnPoint] = true;
-	//	createTankDestroyAnimation(EnemyHolder[EnemyToDestroy[i]]);
-	//	if (EnemyHolder[EnemyToDestroy[i]]->specialEnemy == true) powerUp.create();
-	//	delete EnemyHolder[EnemyToDestroy[i]];
-	//	EnemyHolder[EnemyToDestroy[i]] = nullptr;
-	//}
+	for (unsigned int i = 0; i < EnemyToDestroy.size(); i++){
+		//Data.get().enemyCount -= 1;
+		if (stats.enemyCount > 0) PointsToSpawn[EnemyHolder[EnemyToDestroy[i]]->spawnPoint] = true;
+		createTankDestroyAnimation(EnemyHolder[EnemyToDestroy[i]]);
+		if (EnemyHolder[EnemyToDestroy[i]]->specialEnemy == true) powerUp.create();
+		delete EnemyHolder[EnemyToDestroy[i]];
+		EnemyHolder[EnemyToDestroy[i]] = nullptr;
+	}
 	EnemyToDestroy.clear();
 
 }

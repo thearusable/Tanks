@@ -8,34 +8,8 @@ void DataBase::loadFont(){
 }
 
 void DataBase::load(){
-	resetToDefaultStats();
+	stats.resetToDefaultStats();
 	loadResources();
-}
-
-/*
--> Przywrocenie Bazy do domyslnych wartosci
-*/
-void DataBase::resetToDefaultStats(){
-	//Player1
-	stats.p1LIVES = 3;
-	stats.p1POINTS = 0;
-	//Player2
-	stats.p2LIVES = 3;
-	stats.p2POINTS = 0;
-	//inne
-	stats.displayedLevel = 1; //ilosc map
-	stats.currLevel = 1;//indeks obecnej mapy
-	stats.enemyCount = 23;//ilosc wszystkich przeciwnikow
-	stats.isCustomMap = false; //czy byla tworzona mapa
-	//liczba zabitych wrogow
-	stats.e1p1 = stats.e1p2 = stats.e2p1 = stats.e2p2 = stats.e3p1 = stats.e3p2 = stats.e4p1 = stats.e4p2 = 0; 
-
-}
-
-void DataBase::afterCompleteLvl(){
-	stats.currLevel++;
-	stats.displayedLevel++;
-	stats.e1p1 = stats.e1p2 = stats.e2p1 = stats.e2p2 = stats.e3p1 = stats.e3p2 = stats.e4p1 = stats.e4p2 = 0;
 }
 
 void DataBase::loadResources(){
@@ -91,7 +65,7 @@ sf::Font& DataBase::get(arus::Font f){
 	return FontHolder.get(f);
 }
 
-Stats& DataBase::get(){
+Stats& DataBase::getStats(){
 	return stats;
 }
 

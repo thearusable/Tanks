@@ -73,6 +73,7 @@ void Level::clearMap(){
 	for (int i = 0; i < 13; i++)
 		for (int j = 0; j < 13; j++){
 			mTiledMap[i][j] = elementy[0];
+			mTiledMap[i][j].setPosition(i * 54.f + 30.f, j * 48.f + 25.f);
 		}
 }
 
@@ -95,7 +96,7 @@ void Level::loadMap(unsigned int x){
 		}
 		catch (const char *){
 			xx = 1;
-			DATABASE.get().currLevel = 1;
+			DATABASE.getStats().currLevel = 1;
 		}
 	}
 

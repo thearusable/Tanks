@@ -140,6 +140,10 @@ void MapElement::setIndex(int xx, int yy){
 	y = yy;
 }
 
+sf::Vector2i MapElement::getIndex() {
+	return sf::Vector2i(x, y);
+}
+
 MapElement* MapElement::getParent(){
 	return parent;
 }
@@ -159,6 +163,9 @@ int MapElement::getFScore(){
 }
 
 int MapElement::getGScore(MapElement* p){
+	if (p == nullptr)
+		return 10;
+
 	int temp = 0;
 	if (getTextureID() == arus::Textures::brick) temp = 50;
 	if (getTextureID() == arus::Textures::steel) temp = 90;

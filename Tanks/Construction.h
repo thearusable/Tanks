@@ -25,6 +25,8 @@ private:
 	sf::Vector2f mapPos;
 	sf::Text next;
 
+	Stats& stats;
+
 	bool stillBuildingMap, itSaved;
 };
 

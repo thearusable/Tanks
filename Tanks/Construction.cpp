@@ -4,6 +4,7 @@ extern DataBase DATABASE;
 
 Construction::Construction(MyWindow& window)
 	:target(window)
+	, stats(DATABASE.getStats())
 	, cursorVector(0, 0, 1)
 	, cursor(arus::Textures::cursor)
 	, kafelki()
@@ -164,8 +165,8 @@ void Construction::saveMap(){
 	kafelkiID[6][12] = 14;
 	std::fstream file;
 
-	DATABASE.get().isCustomMap = true;
-	DATABASE.get().currLevel = 0;
+	stats.isCustomMap = true;
+	stats.currLevel = 0;
 	try{
 
 		file.open("Data/Levels/0.txt", std::ios::out); //usuniecie zawartosci
@@ -197,8 +198,8 @@ void Construction::saveMap(){
 		file.close();
 	}
 	catch (const char *){
-		DATABASE.get().isCustomMap = false;
-		DATABASE.get().currLevel = 1;
+		stats.isCustomMap = false;
+		stats.currLevel = 1;
 	}
 	itSaved = true;
 	return;

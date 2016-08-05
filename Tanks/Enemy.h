@@ -1,7 +1,7 @@
 #pragma once
 #include "Tank.h"
 #include "Level.h"
-#include "MapElement.h"
+#include "Node.h"
 
 #include<list>
 #include<iostream>
@@ -14,30 +14,35 @@ public:
 	Enemy(Level& poz, int xx, int yy, int spawn);
 	virtual ~Enemy();
 
-	void setPowerUp(PowerUp& p); //gdy podniesie sie power up
+	void setPowerUp(PowerUp& p); 
 	void setPowerUp(arus::PowerUp p);
 	arus::PowerUp getPowerUp();
+	void update(float deltaTime);
 	virtual bool tryShoot() override;
 
-	void update(float deltaTime);
+	int pointsFromKill, spawnPoint;
+	arus::EnemyType Type;
+	bool specialEnemy;
+	
+	/////////below to path finding and ai logic
+	
 	void calculateNextDir();
 	void nextTarget();
 
 	//pathfinder
-	bool astar(int desX, int desY);
+	void astar();
+	void calcRandomCoord();
+	void followPath(float deltaTime);
+	//virtual void ride(arus::Direction dir, float deltaTime) override;
 
-	void operator ! ();
-	int pointsFromKill, spawnPoint;
-	arus::EnemyType Type;
-	bool specialEnemy;
-
-	Level sciezka;
 protected:
-	std::vector<MapElement*> path;
-	Level& poziom;
+	Level& level;
+	std::vector<Node*> path;
 
+	//map[y][x] !!!!!
+	Node map[13][13]; 
 
-	int posX, posY, pathTargetX, pathTargetY, currTargetX, currTargetY;
-	MapElement* currTarget;
+	int posX, posY, pathTargetX, pathTargetY;
+	Node* currTarget;
 };
 

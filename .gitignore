@@ -17,3 +17,5 @@ Tanks/x64/
 *.pdb
 *.iobj
 *.ipdb
+*.db
+Tanks.VC.db

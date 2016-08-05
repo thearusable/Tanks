@@ -24,35 +24,12 @@ public:
 	0 -> zniszczenie kawalka
 	1 -> zniszczenie calosci*/
 	int hit(arus::bulletType bullet, arus::Direction from);//
+	bool canDestroy;
 
-	//Node do obliczen A*
-	void initNode();
-	void setIndex(int xx, int yy);
-	sf::Vector2i getIndex();
-	MapElement* getParent();
-	void setParent(MapElement* p);
-
-	int getGScore();
-	int getGScore(MapElement* p);
-	int getHScore();
-	int getHScore(MapElement* p);
-	int getFScore();
-
-	void computeScores(MapElement* end);
-	bool hasParent();
-
-	bool operator==(MapElement* p);
-
-	int x, y;
-	bool inOpenList, inClosedList;
-	bool mustDestroy = false;
 protected:
+
 	bool canCollidedWithTank, canCollidedWithBullet;
 	arus::bulletType minimalBulletType;
-	//Node do obliczen A*
-	
-	MapElement* parent; // tego pewnie tu nie bedzie
-	int f, g, h;
-	bool canDestroy;
+
 };
 

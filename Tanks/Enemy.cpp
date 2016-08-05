@@ -1,10 +1,10 @@
 #include "Enemy.h"
 
+typedef std::list<Node*> NodeList;
 
-
-Enemy::Enemy(Level& poz, int xx, int yy, int spawn) :poziom(poz)
+Enemy::Enemy(Level& l, int xx, int yy, int spawn)
+	: level(l)
 {
-	sciezka.clearMap();
 	this->setPowerUp(arus::PowerUp::none);
 	spawnPoint = spawn;
 	srand(unsigned(time(NULL)));
@@ -40,18 +40,22 @@ Enemy::Enemy(Level& poz, int xx, int yy, int spawn) :poziom(poz)
 	posX = xx;
 	posY = yy;
 	this->setPosition(xx * 54.f + 30.f + 4, yy * 48.f + 25.f + 3);
-	path.clear();
 	currDirection = arus::Direction::down;
 	this->updateTexture();
 	this->setScale(0.9f, 0.9f);
-	currTarget = nullptr;
-	pathTargetX = pathTargetY = currTargetX = currTargetY = 0;
+	canMove = true;
 
-	//test
+	//to logic 
+	path.clear();
+	
+	for (int x = 0; x < 13; x++) {
+		for (int y = 0; y < 13; y++) {
+			map[x][y] = Node(level.getMapElement(x, y), x, y);
+		}
+	}
 
-	pathTargetX = rand() % 13;  //tu beda losowania 
-	pathTargetY = rand() % 13;
-	astar(pathTargetX, pathTargetY);
+	calcRandomCoord();
+	astar();
 }
 
 
@@ -67,31 +71,26 @@ bool Enemy::tryShoot() {
 	return false;
 }
 
-void Enemy::operator!() {
-	std::cout << "ilosc elementow w sciezce: " << path.size() << std::endl << "Elementy w sciezce:" << std::endl;
-	for (unsigned int i = 0; i < path.size(); i++)
-		std::cout << path[i]->x << " " << path[i]->y << std::endl;
-}
-
 void Enemy::update(float deltaTime) {
+	//obliczenie wspolrzednych x i y w tablicy
+	posX = int((this->getPosition().x - 30.f) / 54.f);
+	posY = int((this->getPosition().y - 25.f) / 48.f);
 
-	if (path.empty()) { //jezeli sciezka nic nie przechowuje
-						//std::cout<<"dlugosc sciezki: "<<path.size()<<std::endl;
-		//nextTarget();
-	}
-	//std::cout << "obecny cel: " << pathTargetX << " " << pathTargetY << std::endl;
 
-	/*
-	if(!path.empty()) {
-	nextTarget();
-	std::cout<<"dlugosc sciezki"<<path.size()<<std::endl;
+	if (path.empty()) { 
+		calcRandomCoord();
+		astar();
 	}
-	*/
-	if (currTarget != nullptr) {
-		//obliczenie wspolrzednych x i y w tablicy
-		posX = int((this->getPosition().x - 30.f) / 54.f);
-		posY = int((this->getPosition().y - 25.f) / 48.f);
-		std::cout << "posX: " << posX << " posY: " << posY << std::endl;
+
+	followPath(deltaTime);
+
+	if (path.empty() == false && path.back()->mustDestroy == true) {
+		tryShoot();
+	}
+
+	//if (currTarget != nullptr) {
+		
+	//	std::cout << "posX: " << posX << " posY: " << posY << std::endl;
 	//
 	//	//if(currTarget->mustDestroy == true){
 	//	//lewo
@@ -108,10 +107,45 @@ void Enemy::update(float deltaTime) {
 	//
 	//	calculateNextDir();
 	//	this->ride(currDirection, rideSpeed*deltaTime);
-	}
+	//}
 	//calculateNextDir();
 	//setDirection(currDirection);
 	//this->ride(currDirection, rideSpeed*deltaTime);
+
+}
+
+void Enemy::followPath(float deltaTime) {
+	if (path.empty()) {
+		return;
+	}
+
+	std::cout << "mapElement position: x: " << level.getMapElement(path.back()->x, path.back()->y).getPosition().x
+		<< " y: " << level.getMapElement(path.back()->x, path.back()->y).getPosition().y
+		<< " enemy position x: " << getPosition().x << " y: " << getPosition().y << std::endl;
+	auto temp = level.getMapElement(path.back()->x, path.back()->y).getPosition() - getPosition();
+	std::cout << "difrence: x: " << temp.x << " y:" << temp.y << std::endl;
+
+	if (abs(temp.y) > 2.f && temp.y > -2) {
+		//jedz w dol
+		ride(arus::Direction::down, rideSpeed * deltaTime);
+	}
+	else if (abs(temp.y) > 2.f && temp.y < 2) {
+		//jedz w gore
+		ride(arus::Direction::up, rideSpeed * deltaTime);
+	}
+	else if (abs(temp.x) > 2.f && temp.x > -2) {
+		//jedz w prawo
+		ride(arus::Direction::right, rideSpeed * deltaTime);
+	}
+	else if (abs(temp.x) > 2.f && temp.x < 2) {
+		//jedz w lewo
+		ride(arus::Direction::left, rideSpeed * deltaTime);
+	}
+
+	if (abs(temp.y) < 2.f && abs(temp.x) < 2.f) {
+		path.back() = nullptr;
+		path.pop_back();
+	}
 
 }
 
@@ -149,7 +183,7 @@ void Enemy::nextTarget() {
 	if (path.empty()) {
 		pathTargetX = rand() % 13;  //tu beda losowania 
 		pathTargetY = rand() % 13;
-		astar(pathTargetX, pathTargetY);
+		astar();
 	}
 	else if (!path.empty()) { //jezeli sciezka nie jest pusta
 		currTarget = path.back();
@@ -159,42 +193,70 @@ void Enemy::nextTarget() {
 		//currDirection = calculateNextDir();
 	}
 	else currTarget = nullptr;
+	
+}
+
+
+void Enemy::calcRandomCoord()
+{
+	bool good = false;
+	int x = 0, y = 0;
+
+	while (good == false) {
+		srand(unsigned(time(NULL)));
+		x = rand() % 13;
+		y = rand() % 13;
+
+		auto tex = map[x][y].TextureType;
+
+		if (tex == arus::Textures::water ||
+			(tex == arus::Textures::steel && getBulletType() == arus::bulletType::normal) ||
+			(x == posX && y == posY)) {
+			good = false;
+		}
+		else {
+			good = true;
+		}
+	}
+
+	pathTargetX = x;
+	pathTargetY = y;
 }
 
 //PATHFINDER
 //indeksy pola do ktorych ma dotrzec
-bool Enemy::astar(int xx, int yy) {
-	path.clear();//wyczysczenie sciezki
-	typedef std::list<MapElement*> NodeList;
-	int tab[4][2] = { { -1,0 }, //left
-	{ 1,0 }, //right
-	{ 0,-1 }, //up
-	{ 0,1 } }; //down
+void Enemy::astar() {
 
-	MapElement *start = &poziom.getMapElement(posX, posY); //
-	MapElement *end = &poziom.getMapElement(xx, yy);//
-	end->setTexture(arus::Textures::cursor);
+	path.clear();
+	
+	int tab[4][2] = {	{ -1,0 }, //left
+						{ 1,0 }, //right
+						{ 0,-1 }, //up
+						{ 0,1 } }; //down
 
-	MapElement *current = start; //
-	MapElement *child = nullptr; //
+	Node *start = &map[posX][posY]; 
+	Node *end = &map[pathTargetX][pathTargetY];//
+	std::cout << "Target: x: " << pathTargetX << " y: " << pathTargetY << std::endl;
 
-	NodeList visited; //zbior wierzcholkow przejzanych - 2
-	NodeList open; //lista wierzcholkow nieodwiedzonych
-	std::list<MapElement*>::iterator i;
+	Node *current = start; //
+	Node *child = nullptr; //
+
+	NodeList visited; 
+	NodeList open; 
+	std::list<Node*>::iterator i;
 
 	start->inOpenList = true;
 	open.push_back(start); //1
 
-	unsigned int n = 0;
 	sf::Vector2i curr(posX, posY);
 	sf::Vector2i temp;
 
 	while (!open.empty()) 
 	{ 
-		//current->computeScores(end);
+		current->computeScores(end);
 		for (i = open.begin(); i != open.end(); ++i) { //2a
-			//(*i)->computeScores(end);
-			if (i == open.begin() || (*i)->getFScore() <= current->getFScore()) {
+			(*i)->computeScores(end);
+			if (i == open.begin() || (*i)->f <= current->f) {
 				current = (*i);
 				curr = current->getIndex();
 			}
@@ -204,65 +266,81 @@ bool Enemy::astar(int xx, int yy) {
 		visited.push_back(current);
 		current->inClosedList = true; 
 
-		int x = 0;
-		for (x; x < 4; ++x) {
-			std::cout << "wtf!" << std::endl;
+		//if current == target the brak
+		if (current == end) break;
+
+		for (int x = 0; x < 4; ++x) {
+			//sasiad niedostepny lub jak jest w closed to pomin
 			temp = curr;
 			temp.x += tab[x][0];
 			temp.y += tab[x][1]; //ok
 
+			//pominiecie obszaru poza mapa
 			if (temp.x<0 || temp.x> 12) continue;
-			if (temp.y<0 || temp.y> 12) continue; //ok
+			if (temp.y<0 || temp.y> 12) continue; 
+			//pominiecie klockow po ktorych nie moze jechac i ich rozwalic
+			if (map[temp.x][temp.y].TextureType == arus::Textures::water && powerUpType != arus::PowerUp::swim) continue;
+			if (map[temp.x][temp.y].TextureType == arus::Textures::steel && bulletType != arus::bulletType::super) continue;
+			if (map[temp.x][temp.y].inClosedList == true) continue;
 
-			child = &poziom.getMapElement(temp.x, temp.y); //poprawnie przypisuje
-			if (child != nullptr) {
-				std::cout << "child is NOT null" << std::endl;
-			}
-			else
-				std::cout << "child is null" << std::endl;
-
-			if (child->inClosedList || int(child->getTextureID()) > 3) continue; //na poczatek omija wszystko
-			if (this->getBulletType() != arus::bulletType::super && int(child->getTextureID()) == 2) continue; //jezeli trafi na stal
-			if (this->getPowerUp() != arus::PowerUp::swim && int(child->getTextureID()) == 3) continue;
+			child = &map[temp.x][temp.y]; //poprawnie przypisuje
 
 			if (child->inOpenList) { //jezeli jest w openlist 2c2
-				if (child->getGScore() > child->getGScore(current)) { //2c3
+				if (child->g > child->getGScore(current)) { //2c3
 					child->computeScores(end);
-					child->setParent(current);
+					child->parent = current;
 				}
 			}
 			else { //jezeli nie jest w openlist
 				open.push_back(child);
-				child->setParent(current);
+				child->parent = current;
 				child->computeScores(end);
 				child->inOpenList = true;
 			}
 		}
-
 		if (child != nullptr && child->x == end->x && child->y == end->y) break;
 	
 	} //to dziala
+
+	if (path.size() == 0) {
+		//find closest reachable point to end
+		Node* closest = start;
+		for (auto x : visited) {
+			if (x->h < closest->h) {
+				closest = x;
+			}
+		}
+		end = closest;
+		pathTargetX = end->x;
+		pathTargetY = end->y;
+
+		std::cout << "Destination is not reachable, closest:  x: " << closest->x << " y: " << closest->y << std::endl;
+	}
 
 	current = end;
 	while (current->hasParent() && current != start) //odbudowanie 
 	{
 		path.push_back(current);
-		current = current->getParent();
+		current = current->parent;
 	}
 
 	for (unsigned int i = 0; i < path.size(); i++) {
-		if (poziom.mTiledMap[path[i]->getIndex().x][path[i]->getIndex().y].getTextureID() == arus::Textures::empty) {
+		auto tex = map[path[i]->getIndex().x][path[i]->getIndex().y].TextureType;
+		if (tex == arus::Textures::brick ||
+			(tex == arus::Textures::steel && getBulletType() == arus::bulletType::super )) {
 			path[i]->mustDestroy = true;
 		}
-		poziom.mTiledMap[path[i]->getIndex().x][path[i]->getIndex().y].setTexture(arus::Textures::cursor);
-		poziom.mTiledMap[path[i]->getIndex().x][path[i]->getIndex().y].setColliderWithTank(false);
-		poziom.mTiledMap[path[i]->getIndex().x][path[i]->getIndex().y].setPosition(path[i]->getIndex().x * 54.f + 30.f, path[i]->getIndex().y * 48.f + 25.f);
+		else {
+			path[i]->mustDestroy = false;
+		}
 	}
 
 	std::cout << "Path Size: " << path.size() << std::endl;
 
-	if (path.size() > 0) return true;
-	else return false;
+	//for (auto a : path) {
+	//	std::cout << "path x: " << a->x << " y: " << a->y <<" MustD: "<< a->mustDestroy << std::endl;
+	//}
+
 }
 
 void Enemy::setPowerUp(PowerUp& p) {

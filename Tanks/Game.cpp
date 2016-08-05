@@ -184,28 +184,28 @@ void Game::update(){
 			PointsToSpawn[0] = false;
 		}
 	}
-	if (PointsToSpawn[1] == true){//spawn przeciwnika na srodku
-		if (SpawnPoints[1] == nullptr) {
-			createSpawnAnimation(1);
-			stats.enemyCount--;
-		}
-		if (SpawnPoints[1]->update() == true){
-			EnemyHolder.push_back(new Enemy(Poziom, 6, 0, 1));
-			SpawnPoints[1] = nullptr;
-			PointsToSpawn[1] = false;
-		}
-	}
-	if (PointsToSpawn[2] == true){//spawn przeciwnika po prawej
-		if (SpawnPoints[2] == nullptr){
-			createSpawnAnimation(2);
-			stats.enemyCount--;
-		}
-		if (SpawnPoints[2]->update() == true){
-			EnemyHolder.push_back(new Enemy(Poziom, 12, 0, 2));
-			SpawnPoints[2] = nullptr;
-			PointsToSpawn[2] = false;
-		}
-	}
+	//if (PointsToSpawn[1] == true){//spawn przeciwnika na srodku
+	//	if (SpawnPoints[1] == nullptr) {
+	//		createSpawnAnimation(1);
+	//		stats.enemyCount--;
+	//	}
+	//	if (SpawnPoints[1]->update() == true){
+	//		EnemyHolder.push_back(new Enemy(Poziom, 6, 0, 1));
+	//		SpawnPoints[1] = nullptr;
+	//		PointsToSpawn[1] = false;
+	//	}
+	//}
+	//if (PointsToSpawn[2] == true){//spawn przeciwnika po prawej
+	//	if (SpawnPoints[2] == nullptr){
+	//		createSpawnAnimation(2);
+	//		stats.enemyCount--;
+	//	}
+	//	if (SpawnPoints[2]->update() == true){
+	//		EnemyHolder.push_back(new Enemy(Poziom, 12, 0, 2));
+	//		SpawnPoints[2] = nullptr;
+	//		PointsToSpawn[2] = false;
+	//	}
+	//}
 
 	if (SpawnPoints[3] != nullptr){//gracz1
 		if (SpawnPoints[3]->update() == true){

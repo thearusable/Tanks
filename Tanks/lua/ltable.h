@@ -29,7 +29,7 @@
 
 /* returns the key, given the value of a table entry */
 #define keyfromval(v) \
-  (gkey(cast(Node *, cast(char *, (v)) - offsetof(Node, i_val))))
+  (gkey(cast(Nodee *, cast(char *, (v)) - offsetof(Nodee, i_val))))
 
 
 LUAI_FUNC const TValue *luaH_getint (Table *t, lua_Integer key);

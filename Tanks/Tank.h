@@ -13,7 +13,7 @@ public:
 	virtual void update(float deltaTime) = 0; //
 	virtual void setPowerUp(PowerUp& p) = 0; //
 
-	void ride(arus::Direction dir, float deltaTime);//
+	virtual void ride(arus::Direction dir, float deltaTime);//
 
 	void setFreezeDirection(arus::Direction dir); //
 	arus::Direction getFreezeDirection(); //

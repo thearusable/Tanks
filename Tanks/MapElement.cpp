@@ -5,12 +5,6 @@ MapElement::MapElement(void)
 	:canCollidedWithBullet(false)
 	, canCollidedWithTank(false)
 	, minimalBulletType(arus::bulletType::normal)
-	, inClosedList(false)
-	, inOpenList(false)
-	, parent(nullptr)
-	, f(0)
-	, g(0)
-	, h(0)
 	, canDestroy(true)
 {
 }
@@ -19,28 +13,18 @@ MapElement::MapElement(MapElement& m){
 	canCollidedWithBullet = m.getColliderBullet();
 	canCollidedWithTank = m.getColliderTank();
 	minimalBulletType = m.minimalBulletType;
-	inClosedList = m.inClosedList;
-	inOpenList = m.inOpenList;
-	parent = m.parent;
-	f = m.f;
-	g = m.g;
-	h = m.h;
 	canDestroy = m.canDestroy;
 }
 
-void MapElement::initNode(){
-	//////////////////////
-	inClosedList = false;
-	inOpenList = false;
-	parent = nullptr;
-	f = g = h = 0;
-	canDestroy = false;
-}
+MapElement::MapElement(RenderElement& r)
+	: RenderElement(r)
+	, canCollidedWithBullet(false)
+	, canCollidedWithTank(false)
+	, minimalBulletType(arus::bulletType::normal)
+	, canDestroy(true)
+{
 
-MapElement::MapElement(RenderElement& r) :RenderElement(r){
-	initNode();
 }
-
 
 void MapElement::setSize(sf::Vector2f& size){
 	this->mTexture.create(unsigned(size.x), unsigned(size.y));
@@ -135,54 +119,3 @@ int MapElement::hit(arus::bulletType bullet, arus::Direction from){
 	else return 0;
 }
 
-void MapElement::setIndex(int xx, int yy){
-	x = xx;
-	y = yy;
-}
-
-sf::Vector2i MapElement::getIndex() {
-	return sf::Vector2i(x, y);
-}
-
-MapElement* MapElement::getParent(){
-	return parent;
-}
-
-void MapElement::setParent(MapElement* p){
-	parent = p;
-}
-
-int MapElement::getGScore(){
-	return g;
-}
-int MapElement::getHScore(){
-	return h;
-}
-int MapElement::getFScore(){
-	return f;
-}
-
-int MapElement::getGScore(MapElement* p){
-	if (p == nullptr)
-		return 10;
-
-	int temp = 0;
-	if (getTextureID() == arus::Textures::brick) temp = 50;
-	if (getTextureID() == arus::Textures::steel) temp = 90;
-
-	return p->g + temp + ((x == p->x || y == p->y) ? 10 : 14);
-}
-
-int MapElement::getHScore(MapElement* p){
-	return (abs(p->x - x) + abs(p->y - y)) * 10;
-}
-
-void MapElement::computeScores(MapElement* end){
-	g = getGScore(parent);
-	h = getHScore(end);
-	f = g + h;
-}
-
-bool MapElement::hasParent(){
-	return (parent != nullptr);
-}

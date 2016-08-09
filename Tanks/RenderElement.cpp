@@ -2,7 +2,9 @@
 
 extern DataBase DATABASE;
 
-RenderElement::RenderElement(void) :mSprite(), mTexture(), mTexID(arus::Textures::empty), isVisible(false){}
+RenderElement::RenderElement(void) :mSprite(), mTexture(), mTexID(arus::Textures::empty), isVisible(false)
+{
+}
 
 RenderElement::RenderElement(RenderElement& r){//kopiujacy
 	mSprite = r.getSprite();
@@ -14,7 +16,8 @@ RenderElement::RenderElement(arus::Textures t) :mSprite(){
 	this->setTexture(t);
 }
 
-RenderElement::~RenderElement(){}
+RenderElement::~RenderElement(){
+}
 
 /////////// SETY //////////////
 
@@ -27,6 +30,7 @@ void RenderElement::setTexture(arus::Textures t){
 	this->mTexture = DATABASE.get(t);
 	mSprite.setTexture(mTexture);
 	isVisible = true;
+	setOriginToCenter();
 }
 
 void RenderElement::setTextureRect(sf::IntRect& rect){

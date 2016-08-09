@@ -179,7 +179,7 @@ void Game::update(){
 			stats.enemyCount--;
 		}
 		if (SpawnPoints[0]->update() == true){
-			EnemyHolder.push_back(new Enemy(Poziom, 0, 0, 0));
+			EnemyHolder.push_back(new Enemy(Poziom, BulletHolder, 0, 0, 0));
 			SpawnPoints[0] = nullptr;
 			PointsToSpawn[0] = false;
 		}
@@ -277,12 +277,14 @@ void Game::render(){
 void Game::createBulletDestroyAnimation(Bullet * b){
 	if (b == nullptr) return;
 	sf::Vector2f pos = b->getPosition();
-	if (b->getDirection() == arus::Direction::left){
-		pos.x = b->getPosition().x + 4.f;
-	}
-	else if (b->getDirection() == arus::Direction::up){
-		pos.y = b->getPosition().y + 4.f;
-	}
+	pos.x += 68;
+	pos.y += 24;
+	//if (b->getDirection() == arus::Direction::left){
+	//	pos.x = b->getPosition().x ;
+	//}
+	//else if (b->getDirection() == arus::Direction::up){
+	//	pos.y = b->getPosition().y + 4.f;
+	//}
 	AnimetedElements.push_back(new AnimateElement(arus::Textures::bulletDestroy, pos, sf::Vector2f(44, 44), false, 1.f));
 	AnimetedElements.back()->setScale(0.95f, 0.95f);
 }
@@ -319,6 +321,7 @@ void Game::createSpawnAnimation(int numerSpawnu){
 		y = 12;
 	}
 
+	
 	sf::Vector2f pos(x * 54.f + 58.f, y * 48.f + 49.f);
 
 	if (SpawnPoints[numerSpawnu] == nullptr){
@@ -338,6 +341,7 @@ void Game::createSpawnAnimation(int numerSpawnu){
 			return;
 		}
 		SpawnPoints[numerSpawnu] = new AnimateElement(arus::Textures::spawn, pos, sf::Vector2f(42, 38), false, 1.2f);
+		SpawnPoints[numerSpawnu]->setOrigin(0.f, 0.f);
 	}
 }
 
@@ -633,12 +637,12 @@ void Game::correctPosition(sf::Sprite& s1, arus::Direction dir, sf::Sprite& s2){
 		e1Right = e1Left + s1.getGlobalBounds().width,
 		e1Top = s1.getPosition().y,
 		e1Bottom = e1Top + s1.getGlobalBounds().height,
-
+	
 		e2Left = s2.getPosition().x,
 		e2Right = e2Left + s2.getGlobalBounds().width,
 		e2Top = s2.getPosition().y,
 		e2Bottom = e2Top + s2.getGlobalBounds().height;
-
+	
 	if (dir == arus::Direction::up){ //uderzenie od dolu
 		s1.setPosition(s1.getPosition().x, e2Bottom + 0.1f);
 	}

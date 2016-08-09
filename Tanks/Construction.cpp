@@ -37,7 +37,7 @@ Construction::Construction(MyWindow& window)
 	backShapeNext.setScale(1, 1);
 	backShapeNext.setPosition(770, 500);
 
-	cursor.setPosition(mapPos.x, mapPos.y);
+	cursor.setPosition(mapPos.x + 27, mapPos.y + 24);
 	underCursor = elementy[0];
 
 	//mapTexture.loadFromFile("/Data/Textures/MapTextures.jpg");
@@ -58,6 +58,9 @@ Construction::Construction(MyWindow& window)
 	elementy[12].setTexture(arus::Textures::ice); //ice
 	elementy[13].setTexture(arus::Textures::grass); //grass
 	elementy[14].setTexture(arus::Textures::eagle); //orzel
+
+	mapPos.x += 27;
+	mapPos.y += 24;
 }
 
 bool Construction::start(){
@@ -139,6 +142,7 @@ void Construction::update(){
 	nextElement.setPosition(770, 500);
 	if (a == 3 || a == 8) nextElement.move(27, 0);
 	if (a == 5 || a == 10) nextElement.move(0, 24);
+	nextElement.setOrigin(0.f, 0.f);
 
 }
 
@@ -182,8 +186,8 @@ void Construction::saveMap(){
 				file << tempX << " ";
 				file << tempY << " ";
 				file << kafelkiID[tempX][tempY] << " ";
-				file << kafelki[tempX][tempY].getPosition().x << " ";
-				file << kafelki[tempX][tempY].getPosition().y << std::endl;
+				file << kafelki[tempX][tempY].getPosition().x - 27 << " ";
+				file << kafelki[tempX][tempY].getPosition().y - 24 << std::endl;
 			}
 
 			tempX++;

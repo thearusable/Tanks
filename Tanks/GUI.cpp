@@ -36,19 +36,23 @@ GUI::GUI(MyWindow& tar)
 	Teksty[0].setString(tex[0]); //Enemy
 	Teksty[0].setPosition(750, 100);
 	tank_icon[0].setPosition(750, 140 + x);
+	tank_icon[0].setOrigin(0.0f, 0.f);
 	Teksty[1].setString(std::to_string(stats.enemyCount)); //ilosc przeciwnikow
 	Teksty[1].setPosition(780, 135);
 	Teksty[2].setString(tex[1]); //1 gracz
 	Teksty[2].setPosition(750, 300);
 	tank_icon[1].setPosition(750, 340 + x);
+	tank_icon[1].setOrigin(0.0f, 0.f);
 	Teksty[3].setString(std::to_string(stats.p1LIVES)); //zycia 1 gracza
 	Teksty[3].setPosition(780, 335);
 	flaga.setPosition(750, 585);
+	flaga.setOrigin(0.0f, 0.f);
 	Teksty[4].setString(std::to_string(stats.displayedLevel)); //numer rundy
 	Teksty[4].setPosition(780, 600);
 	Teksty[5].setString(tex[2]); //2 gracz
 	Teksty[5].setPosition(750, 380);
 	tank_icon[2].setPosition(750, 420 + x);
+	tank_icon[2].setOrigin(0.0f, 0.f);
 	Teksty[6].setString(std::to_string(stats.p2LIVES)); //zycia 2 gracza
 	Teksty[6].setPosition(780, 415);
 
@@ -66,14 +70,17 @@ GUI::GUI(MyWindow& tar)
 	//p1
 	player1elements[0].setTexture(arus::Textures::tanks);
 	player1elements[0].setScale(1.2f, 1.2f);
-	player1elements[0].setPosition(400.f, 250.f);//
+	player1elements[0].setOrigin(0.0f, 0.f);
+	player1elements[0].setPosition(400.f, 250.f);//400 , 250
 
 	player1elements[1].setTexture(arus::Textures::arrows);
 	player1elements[1].setScale(1.2f, 1.2f);
+	player1elements[1].setOrigin(0.0f, 0.f);
 	player1elements[1].setPosition(370.f, 260.f); //
 
 	player1elements[2].setTexture(arus::Textures::PTS);
 	player1elements[2].setScale(1.2f, 1.2f);
+	player1elements[2].setOrigin(0.0f, 0.f);
 	player1elements[2].setPosition(240.f, 260.f);//
 
 	underline.setFillColor(sf::Color::White);
@@ -84,10 +91,12 @@ GUI::GUI(MyWindow& tar)
 	player2elements[0].setTexture(arus::Textures::arrows);
 	player2elements[0].setScale(1.2f, 1.2f);
 	player2elements[0].rotate(180.f);
+	player2elements[0].setOrigin(0.0f, 0.f);
 	player2elements[0].setPosition(470.f, 450.f); //
 
 	player2elements[1].setTexture(arus::Textures::PTS);
 	player2elements[1].setScale(1.2f, 1.2f);
+	player2elements[1].setOrigin(0.0f, 0.f);
 	player2elements[1].setPosition(540.f, 260.f);
 
 	//ustawienie ekranu wynikow

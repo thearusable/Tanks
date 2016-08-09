@@ -19,6 +19,7 @@ Tank::Tank(void)
 {
 	updateTexture();
 	additional = nullptr;
+	setOriginToCenter();
 }
 
 Tank::~Tank(void)
@@ -57,7 +58,7 @@ void Tank::ride(arus::Direction dir, float deltaTime){
 	}
 	this->move(pos.x * deltaTime, pos.y * deltaTime);
 	this->updateTexture();
-	if (additional != nullptr) additional->setPosition(this->getPosition().x - 2.5f, this->getPosition().y);
+	if (additional != nullptr) additional->setPosition(this->getPosition().x + 27, this->getPosition().y);
 }
 
 void Tank::setFreezeDirection(arus::Direction dir){

@@ -13,6 +13,7 @@ Menu::Menu(MyWindow& window)
 	std::string s[4] = { "One Player", "Two Players", "Construction", "Exit" };
 
 	logo.setPosition((window.getSize().x / 2.f) - logo.getLocalBounds().width / 2.f, window.getSize().y * 0.1f);
+	logo.setOrigin(0.0f, 0.f);
 
 	for (int i = 0; i<4; i++){
 		text[i].setFont(DATABASE.get(arus::Font::DisposableDroid));
@@ -23,6 +24,7 @@ Menu::Menu(MyWindow& window)
 
 	tank.setScale(0.9f, 0.9f);
 	tank.setPosition(text[0].getPosition().x - 70, text[0].getPosition().y + 10);
+	tank.setOrigin(0.0f, 0.f);
 }
 
 void Menu::start(){//fixed update

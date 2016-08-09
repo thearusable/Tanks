@@ -7,6 +7,7 @@ MapElement::MapElement(void)
 	, minimalBulletType(arus::bulletType::normal)
 	, canDestroy(true)
 {
+	setOriginToCenter();
 }
 
 MapElement::MapElement(MapElement& m){
@@ -14,6 +15,7 @@ MapElement::MapElement(MapElement& m){
 	canCollidedWithTank = m.getColliderTank();
 	minimalBulletType = m.minimalBulletType;
 	canDestroy = m.canDestroy;
+	setOriginToCenter();
 }
 
 MapElement::MapElement(RenderElement& r)
@@ -23,7 +25,7 @@ MapElement::MapElement(RenderElement& r)
 	, minimalBulletType(arus::bulletType::normal)
 	, canDestroy(true)
 {
-
+	setOriginToCenter();
 }
 
 void MapElement::setSize(sf::Vector2f& size){

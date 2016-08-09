@@ -33,8 +33,10 @@ void Player::resetPlayer(){
 	if (isFirstPlayer && stats.p1LIVES == 0) return;
 	else if (!isFirstPlayer && stats.p2LIVES == 0) return;
 
-	if (isFirstPlayer) this->setPosition(4.f*54.f + 34.f, 12 * 48.f + 25.f);
-	else this->setPosition(8.f*54.f + 34.f, 12 * 48.f + 25.f);
+	if (isFirstPlayer) this->setPosition(4.f*54.f + 58, 12 * 48.f + 48);
+	else this->setPosition(8.f*54.f + 58, 12 * 48.f + 50);
+
+	
 
 	this->setTextureRect(sf::IntRect(0 * 48, 0 * 48, 48, 48));
 	this->setTextureSource(0, 0);

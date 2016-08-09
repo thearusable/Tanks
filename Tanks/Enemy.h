@@ -2,6 +2,7 @@
 #include "Tank.h"
 #include "Level.h"
 #include "Node.h"
+#include "Bullet.h"
 
 #include<list>
 #include<iostream>
@@ -11,7 +12,7 @@ class Enemy :
 	public Tank
 {
 public:
-	Enemy(Level& poz, int xx, int yy, int spawn);
+	Enemy(Level& poz, std::vector<Bullet*>& bh, int xx, int yy, int spawn);
 	virtual ~Enemy();
 
 	void setPowerUp(PowerUp& p); 
@@ -33,16 +34,17 @@ public:
 	void astar();
 	void calcRandomCoord();
 	void followPath(float deltaTime);
+	sf::Vector2f IndexToPosition(int indexX, int indexY);
 	//virtual void ride(arus::Direction dir, float deltaTime) override;
 
 protected:
 	Level& level;
 	std::vector<Node*> path;
 
-	//map[y][x] !!!!!
+	std::vector<Bullet*>& BulletHolder;
 	Node map[13][13]; 
 
-	int posX, posY, pathTargetX, pathTargetY;
+	int IndexX, IndexY, pathTargetX, pathTargetY;
 	Node* currTarget;
 };
 

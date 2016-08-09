@@ -9,6 +9,7 @@ AnimateElement::AnimateElement(arus::Textures t, sf::Vector2f pos, sf::Vector2f 
 	, colldown(timeToChange)
 	, sliceSize(size)
 {
+	setOrigin(0.f, 0.f);
 	this->setVisible(true);
 	this->setTexture(t);
 	textureSize = mTexture.getSize();

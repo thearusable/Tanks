@@ -13,15 +13,17 @@ Level::Level(void) :elementy(), mEdge(), background(){
 	background.setPosition(mapPosition);
 
 	for (int i = 0; i<4; i++){
+		
 		mEdge[i].setSize(sf::Vector2f(15 * 54.f, 50.f));
 		mEdge[i].setTexture(arus::Textures::brick);
+		mEdge[i].setOrigin(0.f,0.f);
 	}
-	mEdge[0].setPosition(0.f, mapPosition.y - mEdge[0].getLocalBounds().height); //top - ready
-	mEdge[1].setPosition(0.f, mapPosition.y + 13 * 48.f); //bot - ready
+	mEdge[0].setPosition(0.f, mapPosition.y + 24 - mEdge[0].getLocalBounds().height); //top - ready
+	mEdge[1].setPosition(0.f, mapPosition.y + 24 + 13 * 48.f); //bot - ready
 	mEdge[2].setRotation(90.f);
-	mEdge[2].setPosition(mapPosition.x - 50.f, mapPosition.y); //left - ready
+	mEdge[2].setPosition(mapPosition.x + 24 - 50.f, mapPosition.y); //left - ready
 	mEdge[3].setRotation(90.f);
-	mEdge[3].setPosition(mapPosition.x + 13 * 54.f, mapPosition.y); //right
+	mEdge[3].setPosition(mapPosition.x + 24 + 13 * 54.f, mapPosition.y); //right
 
 
 	elementy[0] = RenderElement();
@@ -73,7 +75,7 @@ void Level::clearMap(){
 	for (int i = 0; i < 13; i++)
 		for (int j = 0; j < 13; j++){
 			mTiledMap[i][j] = elementy[0];
-			mTiledMap[i][j].setPosition(i * 54.f + 30.f, j * 48.f + 25.f);
+			mTiledMap[i][j].setPosition(i * 54.f + 30.f + 27.f, j * 48.f + 25.f + 24.f);
 		}
 }
 
@@ -109,7 +111,7 @@ void Level::loadMap(unsigned int x){
 
 			mTiledMap[tempX][tempY] = elementy[id];
 
-			mTiledMap[tempX][tempY].setPosition(float(posX), float(posY));
+			mTiledMap[tempX][tempY].setPosition(float(posX + 27), float(posY + 24));
 
 			if (id == 13 || id == 12) mTiledMap[tempX][tempY].setColliderWithTank(false);
 			else mTiledMap[tempX][tempY].setColliderWithTank(true);

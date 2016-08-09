@@ -1,9 +1,11 @@
 #include "Enemy.h"
 
 typedef std::list<Node*> NodeList;
+static float PostitionTreshold = 1.f;
 
-Enemy::Enemy(Level& l, int xx, int yy, int spawn)
+Enemy::Enemy(Level& l, std::vector<Bullet*>& bh, int xx, int yy, int spawn)
 	: level(l)
+	, BulletHolder(bh)
 {
 	this->setPowerUp(arus::PowerUp::none);
 	spawnPoint = spawn;
@@ -37,13 +39,13 @@ Enemy::Enemy(Level& l, int xx, int yy, int spawn)
 	if (temp2 == 1) specialEnemy = true;
 	else specialEnemy = false;
 
-	posX = xx;
-	posY = yy;
-	this->setPosition(xx * 54.f + 30.f + 4, yy * 48.f + 25.f + 3);
-	currDirection = arus::Direction::down;
-	this->updateTexture();
-	this->setScale(0.9f, 0.9f);
+	IndexX = xx;
+	IndexY = yy;
+	this->setPosition(xx * 54.f + 58, yy * 48.f + 48);
+	currDirection = arus::Direction::up;
 	canMove = true;
+	this->setScale(0.9f, 0.9f);
+	this->updateTexture();
 
 	//to logic 
 	path.clear();
@@ -66,6 +68,14 @@ Enemy::~Enemy(void)
 bool Enemy::tryShoot() {
 	if (colldown <= 0.f) {
 		colldown = 1.f;
+
+		Bullet* temp = new Bullet(getDirection(), getPosition(), getBulletType());
+		temp->bulletOwner = 3;
+		BulletHolder.push_back(temp);
+		setFreezeDirection(arus::Direction::none);
+
+		std::cout << "Bullet spawned." << std::endl;
+
 		return true;
 	}
 	return false;
@@ -73,10 +83,12 @@ bool Enemy::tryShoot() {
 
 void Enemy::update(float deltaTime) {
 	//obliczenie wspolrzednych x i y w tablicy
-	posX = int((this->getPosition().x - 30.f) / 54.f);
-	posY = int((this->getPosition().y - 25.f) / 48.f);
+	IndexX = int((this->getPosition().x - 30.f) / 54.f);
+	IndexY = int((this->getPosition().y - 25.f) / 48.f);
+	//decrease colldown
+	if (colldown > 0.0f) colldown -= deltaTime;
 
-
+	//tryShoot();
 	if (path.empty()) { 
 		calcRandomCoord();
 		astar();
@@ -119,64 +131,69 @@ void Enemy::followPath(float deltaTime) {
 		return;
 	}
 
-	std::cout << "mapElement position: x: " << level.getMapElement(path.back()->x, path.back()->y).getPosition().x
-		<< " y: " << level.getMapElement(path.back()->x, path.back()->y).getPosition().y
-		<< " enemy position x: " << getPosition().x << " y: " << getPosition().y << std::endl;
-	auto temp = level.getMapElement(path.back()->x, path.back()->y).getPosition() - getPosition();
-	std::cout << "difrence: x: " << temp.x << " y:" << temp.y << std::endl;
+	auto targetPosition = IndexToPosition(path.back()->x, path.back()->y);
 
-	if (abs(temp.y) > 2.f && temp.y > -2) {
+	//need position in pixels to position in index
+	std::cout << "mapElement position: x: " << targetPosition.x
+		<< " y: " << targetPosition.y
+		<< " enemy position x: " << getPosition().x << " y: " << getPosition().y << std::endl;
+
+	auto temp = targetPosition - getPosition();
+	std::cout << "difrence: x: " << temp.x << " y:" << temp.y << "mustDestroy: " << path.back()->mustDestroy << std::endl;
+
+	auto absX = abs(temp.x);
+	auto absY = abs(temp.y);
+
+	if (absY > 1.f && temp.y > -1.f) {
 		//jedz w dol
 		ride(arus::Direction::down, rideSpeed * deltaTime);
 	}
-	else if (abs(temp.y) > 2.f && temp.y < 2) {
+	else if (abs(temp.y) > 1.f && temp.y < 1.f) {
 		//jedz w gore
 		ride(arus::Direction::up, rideSpeed * deltaTime);
 	}
-	else if (abs(temp.x) > 2.f && temp.x > -2) {
+	else if (abs(temp.x) > 1.f && temp.x > -1.f) {
 		//jedz w prawo
 		ride(arus::Direction::right, rideSpeed * deltaTime);
 	}
-	else if (abs(temp.x) > 2.f && temp.x < 2) {
+	else if (abs(temp.x) > 1.f && temp.x < 1.f) {
 		//jedz w lewo
 		ride(arus::Direction::left, rideSpeed * deltaTime);
 	}
-
-	if (abs(temp.y) < 2.f && abs(temp.x) < 2.f) {
-		path.back() = nullptr;
+	else {
 		path.pop_back();
 	}
 
 }
 
 void Enemy::calculateNextDir() {
-	if (currTarget != nullptr) {
-		std::cout << "currentTarget: x:" << currTarget->x << " y:" << currTarget->y << std::endl;
-		if (posX > currTarget->x &&  posY == currTarget->y) { //lewo
-			std::cout << "teraz powinien jechac w lewo" << std::endl;
-			currDirection = arus::Direction::left;
-			//nextTarget();
-		}
-		if (posX < currTarget->x  &&  posY == currTarget->y) { //prawo
-			std::cout << "teraz powinien jechac w prawo" << std::endl;
-			currDirection = arus::Direction::right;
-			//nextTarget();
-		}
-		if (posX == currTarget->x &&  posY > currTarget->y) { //gora
-			std::cout << "teraz powinien jechac w gore" << std::endl;
-			currDirection = arus::Direction::up;
-			//nextTarget();
-		}
-		if (posX == currTarget->x &&  posY < currTarget->y) { //dol
-			std::cout << "teraz powinien jechac w dol" << std::endl;
-			currDirection = arus::Direction::down;
-			//nextTarget();
-		}
-		//if(this->getPosition().x < currTarget->position.x) return arus::Direction::right; //jazda w prawo
-		//if(this->getPosition().x > currTarget->position.x) return arus::Direction::left; //jazda w lewo
-		//if(this->getPosition().y > currTarget->position.y) return arus::Direction::up; //jazda do gory
-		//if(this->getPosition().y < currTarget->position.y) return arus::Direction::down; //jazda do gory
-	}
+	//if (currTarget != nullptr) {
+	//	std::cout << "currentTarget: x:" << currTarget->x << " y:" << currTarget->y << std::endl;
+	//	if (posX > currTarget->x &&  posY == currTarget->y) { //lewo
+	//		std::cout << "teraz powinien jechac w lewo" << std::endl;
+	//		currDirection = arus::Direction::left;
+	//		//nextTarget();
+	//	}
+	//	if (posX < currTarget->x  &&  posY == currTarget->y) { //prawo
+	//		std::cout << "teraz powinien jechac w prawo" << std::endl;
+	//		currDirection = arus::Direction::right;
+	//		//nextTarget();
+	//	}
+	//	if (posX == currTarget->x &&  posY > currTarget->y) { //gora
+	//		std::cout << "teraz powinien jechac w gore" << std::endl;
+	//		currDirection = arus::Direction::up;
+	//		//nextTarget();
+	//	}
+	//	if (posX == currTarget->x &&  posY < currTarget->y) { //dol
+	//		std::cout << "teraz powinien jechac w dol" << std::endl;
+	//		currDirection = arus::Direction::down;
+	//		//nextTarget();
+	//	}
+	//	//if(this->getPosition().x < currTarget->position.x) return arus::Direction::right; //jazda w prawo
+	//	//if(this->getPosition().x > currTarget->position.x) return arus::Direction::left; //jazda w lewo
+	//	//if(this->getPosition().y > currTarget->position.y) return arus::Direction::up; //jazda do gory
+	//	//if(this->getPosition().y < currTarget->position.y) return arus::Direction::down; //jazda do gory
+	//}
 }
 
 void Enemy::nextTarget() {
@@ -211,7 +228,7 @@ void Enemy::calcRandomCoord()
 
 		if (tex == arus::Textures::water ||
 			(tex == arus::Textures::steel && getBulletType() == arus::bulletType::normal) ||
-			(x == posX && y == posY)) {
+			(x == IndexX && y == IndexY)) {
 			good = false;
 		}
 		else {
@@ -234,7 +251,7 @@ void Enemy::astar() {
 						{ 0,-1 }, //up
 						{ 0,1 } }; //down
 
-	Node *start = &map[posX][posY]; 
+	Node *start = &map[IndexX][IndexY]; 
 	Node *end = &map[pathTargetX][pathTargetY];//
 	std::cout << "Target: x: " << pathTargetX << " y: " << pathTargetY << std::endl;
 
@@ -248,7 +265,7 @@ void Enemy::astar() {
 	start->inOpenList = true;
 	open.push_back(start); //1
 
-	sf::Vector2i curr(posX, posY);
+	sf::Vector2i curr(IndexX, IndexY);
 	sf::Vector2i temp;
 
 	while (!open.empty()) 
@@ -354,4 +371,9 @@ arus::PowerUp Enemy::getPowerUp() {
 
 void Enemy::setPowerUp(arus::PowerUp p) {
 	powerUpType = p;
+}
+
+sf::Vector2f Enemy::IndexToPosition(int indexX, int indexY)
+{
+	return sf::Vector2f(indexX * 54.f + 30.f + 27, indexY * 48.f + 25.f + 24);
 }

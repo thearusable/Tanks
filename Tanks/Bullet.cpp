@@ -17,19 +17,19 @@ Bullet::Bullet(arus::Direction dir, sf::Vector2f pos, arus::bulletType type, flo
 	this->setPosition(pos.x, pos.y);
 	if (mDirection == arus::Direction::up){
 		this->setRotation(270.f);
-		this->setPosition(pos.x + 24, pos.y);
+		this->setPosition(pos.x, pos.y);
 	}
 	else if (mDirection == arus::Direction::down){
 		this->setRotation(90.f);
-		this->setPosition(pos.x + 24, pos.y + 48);
+		this->setPosition(pos.x, pos.y + 48);
 	}
 	else if (mDirection == arus::Direction::left){
 		this->setRotation(180.f);
-		this->setPosition(pos.x, pos.y + 24);
+		this->setPosition(pos.x, pos.y);
 	}
 	else if (mDirection == arus::Direction::right){
 		this->setRotation(0.f);
-		this->setPosition(pos.x + 48, pos.y + 24);
+		this->setPosition(pos.x + 48, pos.y);
 	}
 }
 

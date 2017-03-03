@@ -134,12 +134,12 @@ void Enemy::followPath(float deltaTime) {
 	auto targetPosition = IndexToPosition(path.back()->x, path.back()->y);
 
 	//need position in pixels to position in index
-	std::cout << "mapElement position: x: " << targetPosition.x
-		<< " y: " << targetPosition.y
-		<< " enemy position x: " << getPosition().x << " y: " << getPosition().y << std::endl;
+	//std::cout << "mapElement position: x: " << targetPosition.x
+	//	<< " y: " << targetPosition.y
+	//	<< " enemy position x: " << getPosition().x << " y: " << getPosition().y << std::endl;
 
 	auto temp = targetPosition - getPosition();
-	std::cout << "difrence: x: " << temp.x << " y:" << temp.y << "mustDestroy: " << path.back()->mustDestroy << std::endl;
+	//std::cout << "difrence: x: " << temp.x << " y:" << temp.y << "mustDestroy: " << path.back()->mustDestroy << std::endl;
 
 	auto absX = abs(temp.x);
 	auto absY = abs(temp.y);
@@ -253,7 +253,7 @@ void Enemy::astar() {
 
 	Node *start = &map[IndexX][IndexY]; 
 	Node *end = &map[pathTargetX][pathTargetY];//
-	std::cout << "Target: x: " << pathTargetX << " y: " << pathTargetY << std::endl;
+	//std::cout << "Target: x: " << pathTargetX << " y: " << pathTargetY << std::endl;
 
 	Node *current = start; //
 	Node *child = nullptr; //
@@ -331,7 +331,7 @@ void Enemy::astar() {
 		pathTargetX = end->x;
 		pathTargetY = end->y;
 
-		std::cout << "Destination is not reachable, closest:  x: " << closest->x << " y: " << closest->y << std::endl;
+		//std::cout << "Destination is not reachable, closest:  x: " << closest->x << " y: " << closest->y << std::endl;
 	}
 
 	current = end;
@@ -352,7 +352,7 @@ void Enemy::astar() {
 		}
 	}
 
-	std::cout << "Path Size: " << path.size() << std::endl;
+	//std::cout << "Path Size: " << path.size() << std::endl;
 
 	//for (auto a : path) {
 	//	std::cout << "path x: " << a->x << " y: " << a->y <<" MustD: "<< a->mustDestroy << std::endl;

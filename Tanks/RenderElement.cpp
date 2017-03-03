@@ -2,17 +2,22 @@
 
 extern DataBase DATABASE;
 
-RenderElement::RenderElement(void) :mSprite(), mTexture(), mTexID(arus::Textures::empty), isVisible(false)
-{
+RenderElement::RenderElement() {
+
 }
 
-RenderElement::RenderElement(RenderElement& r){//kopiujacy
+RenderElement::RenderElement(arus::Textures texture, sf::Vector2f pos) {
+	this->setTexture(texture);
+	this->setPosition(pos);
+}
+
+RenderElement::RenderElement(RenderElement& r){
 	mSprite = r.getSprite();
-	setTexture(r.getTextureID());
+	this->setTexture(r.getTextureID());
 	isVisible = r.getVisible();
 }
 
-RenderElement::RenderElement(arus::Textures t) :mSprite(){
+RenderElement::RenderElement(arus::Textures t){
 	this->setTexture(t);
 }
 
@@ -46,8 +51,16 @@ void RenderElement::setPosition(float x, float y){
 	mSprite.setPosition(x, y);
 }
 
+void RenderElement::setPosition(sf::Vector2f pos) {
+	mSprite.setPosition(pos);
+}
+
 void RenderElement::setScale(float x, float y){
 	mSprite.setScale(x, y);
+}
+
+void RenderElement::setScale(sf::Vector2f scale) {
+	mSprite.setScale(scale);
 }
 
 void RenderElement::setRotation(float x){

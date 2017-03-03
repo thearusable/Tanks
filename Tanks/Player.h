@@ -5,7 +5,7 @@ class Player :
 	public Tank
 {
 public:
-	Player(arus::bulletType bullet, bool isFirst = true);
+	Player(arus::bulletType bullet, bool isFirst);
 	virtual ~Player();
 
 	void resetPlayer();

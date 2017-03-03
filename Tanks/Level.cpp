@@ -26,7 +26,7 @@ Level::Level(void) :elementy(), mEdge(), background(){
 	mEdge[3].setPosition(mapPosition.x + 24 + 13 * 54.f, mapPosition.y); //right
 
 
-	elementy[0] = RenderElement();
+	elementy[0] = RenderElement(arus::Textures::empty, sf::Vector2f(0.f,0.f));
 	elementy[1].setTextureAndRect(arus::Textures::brick, sf::IntRect(0, 0, 54, 48));
 	elementy[2].setTextureAndRect(arus::Textures::brick, sf::IntRect(0, 0, 27, 48));
 	elementy[3].setTextureAndRect(arus::Textures::brick, sf::IntRect(27, 0, 27, 48));

@@ -7,6 +7,7 @@ class Tank :
 {
 public:
 	Tank(void);
+	Tank(arus::Textures texture, sf::Vector2f pos);
 	virtual ~Tank();//
 
 	virtual bool tryShoot() = 0; //

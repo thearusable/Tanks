@@ -15,6 +15,7 @@ AnimateElement::AnimateElement(arus::Textures t, sf::Vector2f pos, sf::Vector2f 
 	textureSize = mTexture.getSize();
 	this->setTextureRect(sf::IntRect(0, 0, sliceSize.x, sliceSize.y));
 	this->setPosition(pos.x - sliceSize.x / 2.f, pos.y - sliceSize.y / 2.f);
+	this->setOriginToCenter();
 }
 
 bool AnimateElement::update(){

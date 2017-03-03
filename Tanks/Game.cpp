@@ -11,7 +11,7 @@ Game::Game(MyWindow& window, bool TwoPlayers)
 	, isGameOver(false)
 	, mapCompleted(false)
 	, isSummary(false)
-	, Gracz1(arus::bulletType::normal)
+	, Gracz1(arus::bulletType::normal, true)
 	, Gracz2(arus::bulletType::normal, false)
 	, EnemyToSpawn()
 	, powerUp()
@@ -277,8 +277,8 @@ void Game::render(){
 void Game::createBulletDestroyAnimation(Bullet * b){
 	if (b == nullptr) return;
 	sf::Vector2f pos = b->getPosition();
-	pos.x += 68;
-	pos.y += 24;
+	//pos.x += 68;
+	//pos.y += 24;
 	//if (b->getDirection() == arus::Direction::left){
 	//	pos.x = b->getPosition().x ;
 	//}
@@ -286,7 +286,7 @@ void Game::createBulletDestroyAnimation(Bullet * b){
 	//	pos.y = b->getPosition().y + 4.f;
 	//}
 	AnimetedElements.push_back(new AnimateElement(arus::Textures::bulletDestroy, pos, sf::Vector2f(44, 44), false, 1.f));
-	AnimetedElements.back()->setScale(0.95f, 0.95f);
+	//AnimetedElements.back()->setScale(0.95f, 0.95f);
 }
 
 void Game::createTankDestroyAnimation(Tank* t){

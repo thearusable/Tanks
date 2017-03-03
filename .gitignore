@@ -1,9 +1,5 @@
-Debug/Tanks.exe
-Debug/Tanks.ilk
-Debug/Tanks.pdb
-Release/Tanks.exe
-Release/Tanks.pdb
-Release/Tanks.ilk
+Debug/*
+Release/*
 Tanks.v12.suo
 Tanks.sdf
 Tanks/Release/
@@ -17,7 +13,6 @@ Tanks/x64/
 *.pdb
 *.iobj
 *.ipdb
+*.VC.db
+*.opendb
 *.db
-Tanks.VC.db
-*.db
-Tanks.VC.db

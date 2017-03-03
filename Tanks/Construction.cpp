@@ -22,7 +22,7 @@ Construction::Construction(MyWindow& window)
 	next.setString("Next");
 	next.setPosition(770, 450);
 	next.setCharacterSize(30);
-	next.setColor(sf::Color::Black);
+	next.setFillColor(sf::Color::Black);
 
 	mapPos.x = 30;
 	mapPos.y = 25;

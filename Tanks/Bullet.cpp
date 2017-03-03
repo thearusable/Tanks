@@ -6,30 +6,37 @@ Bullet::Bullet(arus::Direction dir, sf::Vector2f pos, arus::bulletType type, flo
 	, mType(type)
 	, bulletOwner(3)
 	, bulletSpeed(s)
+	, RenderElement()
 {
+	this->setPosition(pos.x, pos.y);
+
 	if (type == arus::bulletType::normal){
 		this->setTexture(arus::Textures::bullet);
 	}
 	else if (type == arus::bulletType::super){
 		this->setTexture(arus::Textures::sBullet);
 	}
-	this->setOriginToCenter();
-	this->setPosition(pos.x, pos.y);
+	std::cout << "Texture " << mTexture.getSize().x << " " << mTexture.getSize().y << std::endl;
+	std::cout << "Sprite  " << mSprite.getGlobalBounds().width << " " << mSprite.getGlobalBounds().height << std::endl;
 	if (mDirection == arus::Direction::up){
-		this->setRotation(270.f);
-		this->setPosition(pos.x, pos.y);
+		//this->setPosition(pos.x, pos.y - 20.f);
+		//this->setRotation(270.f);
+		
 	}
 	else if (mDirection == arus::Direction::down){
-		this->setRotation(90.f);
-		this->setPosition(pos.x, pos.y + 48);
+		//this->setPosition(pos.x, pos.y + 20.f);
+		//this->setRotation(90.f);
+		
 	}
 	else if (mDirection == arus::Direction::left){
-		this->setRotation(180.f);
-		this->setPosition(pos.x, pos.y);
+		//this->setPosition(pos.x - 20.f, pos.y);
+		//this->setRotation(180.f);
+		
 	}
 	else if (mDirection == arus::Direction::right){
-		this->setRotation(0.f);
-		this->setPosition(pos.x + 48, pos.y);
+		//this->setPosition(pos.x + 20.f, pos.y);
+		//this->setRotation(0.f);
+		
 	}
 }
 

@@ -1,21 +1,32 @@
 #include "MapElement.h"
 
 
-MapElement::MapElement(void)
-	:canCollidedWithBullet(false)
+MapElement::MapElement() 
+	: canCollidedWithBullet(false)
 	, canCollidedWithTank(false)
 	, minimalBulletType(arus::bulletType::normal)
 	, canDestroy(true)
 {
-	setOriginToCenter();
 }
 
-MapElement::MapElement(MapElement& m){
+MapElement::MapElement(arus::Textures tex, sf::Vector2f pos, sf::Vector2i cords)
+	: RenderElement(tex, pos)
+	, GridCords(cords)
+	, canCollidedWithBullet(false)
+	, canCollidedWithTank(false)
+	, minimalBulletType(arus::bulletType::normal)
+	, canDestroy(true)
+{
+}
+
+MapElement::MapElement(MapElement& m)
+	: RenderElement(m.getTextureID(), m.getPosition())
+{
+	GridCords = m.GridCords;
 	canCollidedWithBullet = m.getColliderBullet();
 	canCollidedWithTank = m.getColliderTank();
 	minimalBulletType = m.minimalBulletType;
 	canDestroy = m.canDestroy;
-	setOriginToCenter();
 }
 
 MapElement::MapElement(RenderElement& r)
@@ -25,7 +36,6 @@ MapElement::MapElement(RenderElement& r)
 	, minimalBulletType(arus::bulletType::normal)
 	, canDestroy(true)
 {
-	setOriginToCenter();
 }
 
 void MapElement::setSize(sf::Vector2f& size){

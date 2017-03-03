@@ -1,8 +1,7 @@
 #include "Tank.h"
 
-
-Tank::Tank(void)
-	:powerUpType(arus::PowerUp::none)
+Tank::Tank()
+	: powerUpType(arus::PowerUp::none)
 	, powerUpTime(0)
 	, colldown(0)
 	, rideSpeed(120)
@@ -19,7 +18,27 @@ Tank::Tank(void)
 {
 	updateTexture();
 	additional = nullptr;
-	setOriginToCenter();
+}
+
+Tank::Tank(arus::Textures texture, sf::Vector2f pos)
+	: powerUpType(arus::PowerUp::none)
+	, powerUpTime(0)
+	, colldown(0)
+	, rideSpeed(120)
+	, defaultSpeed(120)
+	, HP(1)
+	, currDirection(arus::Direction::down)
+	, lastDirection(arus::Direction::down)
+	, freezeDirection(arus::Direction::none)
+	, isMoving(false)
+	, canMove(true)
+	, textureSource()
+	, canBeDestroyed(true)
+	, bulletType(arus::bulletType::normal)
+	, RenderElement(texture, pos)
+{
+	updateTexture();
+	additional = nullptr;
 }
 
 Tank::~Tank(void)

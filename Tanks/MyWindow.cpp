@@ -18,9 +18,11 @@ MyWindow::~MyWindow(){}
 
 BOOL MyWindow::initialize(){
 	FPS.setCharacterSize(30);
-	FPS.setColor(sf::Color::Yellow);
+	FPS.setFillColor(sf::Color::Yellow);
 	FPS.setFont(DATABASE.get(arus::Font::DisposableDroid));
 	FPS.setPosition(10,5);
+
+	timeFromLastFPSShow = 0.f;
 
 	BOOL b = QueryPerformanceFrequency(&timeFrequency);
 	if (!b)
@@ -34,11 +36,15 @@ void MyWindow::newFrame(){
 	delta.QuadPart = thisTime.QuadPart - timeLastFrame.QuadPart;
 	deltaTime = float(delta.QuadPart) / timeFrequency.QuadPart;
 	timeLastFrame.QuadPart = thisTime.QuadPart;
+	timeFromLastFPSShow += timeElapsedLastFrame();
 }
 
 void MyWindow::display(){
-	if (showFPS){
-		FPS.setString(std::to_string(int(1.f / deltaTime)));
+	if (timeFromLastFPSShow > 0.3f) {
+		FPS.setString(std::to_string(int(1 / deltaTime)));
+		timeFromLastFPSShow = 0.f;
+	}
+	if (showFPS){	
 		this->draw(FPS);
 	}
 	RenderWindow::display();

@@ -5,6 +5,7 @@ class MapElement :
 {
 public:
 	MapElement(void);
+	MapElement(arus::Textures tex, sf::Vector2f pos, sf::Vector2i cords);
 	MapElement(MapElement& m);
 	MapElement(RenderElement& r);
 
@@ -25,9 +26,10 @@ public:
 	1 -> zniszczenie calosci*/
 	int hit(arus::bulletType bullet, arus::Direction from);//
 	bool canDestroy;
+	sf::Vector2i GridCords;
 
 protected:
-
+	
 	bool canCollidedWithTank, canCollidedWithBullet;
 	arus::bulletType minimalBulletType;
 

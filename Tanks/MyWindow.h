@@ -26,7 +26,7 @@ protected:
 	LARGE_INTEGER timeFrequency;
 	LARGE_INTEGER timeLastFrame;
 	LARGE_INTEGER deltaLastFrame;
-	float deltaTime;
+	float deltaTime, timeFromLastFPSShow;
 	bool showFPS;
 };
 

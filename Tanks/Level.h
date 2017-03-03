@@ -17,6 +17,7 @@ public:
 	void clearMap(); //czyszczenie mapy
 	MapElement& getMapElement(int x, int y);
 
+	
 	MapElement mTiledMap[13][13];
 	MapElement mEdge[4];
 protected:

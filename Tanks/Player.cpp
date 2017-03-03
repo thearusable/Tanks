@@ -3,7 +3,7 @@
 extern DataBase DATABASE;
 
 Player::Player(arus::bulletType bullet, bool isFirst)
-	:stats(DATABASE.getStats())
+	: stats(DATABASE.getStats())
 	, isFirstPlayer(isFirst)
 {
 	canMove = true;

@@ -2,6 +2,7 @@
 
 
 PowerUp::PowerUp(void) :time(0), type()
+	, RenderElement(arus::Textures::empty, sf::Vector2f(0.f,0.f))
 {
 	this->setVisible(false);
 }

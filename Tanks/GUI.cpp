@@ -19,7 +19,7 @@ GUI::GUI(MyWindow& tar)
 	for (sf::Text& t : Teksty){
 		t.setFont(DATABASE.get(arus::Font::DisposableDroid));
 		t.setCharacterSize(40);
-		t.setColor(sf::Color::Black);
+		t.setFillColor(sf::Color::Black);
 	}
 
 	for (RenderElement& r : tank_icon) {
@@ -57,12 +57,12 @@ GUI::GUI(MyWindow& tar)
 	Teksty[6].setPosition(780, 415);
 
 	for (sf::Text& t : player1){
-		t.setColor(sf::Color::White);
+		t.setFillColor(sf::Color::White);
 		t.setFont(DATABASE.get(arus::Font::DisposableDroid));
 		t.setCharacterSize(35);
 	}
 	for (sf::Text& t : player2){
-		t.setColor(sf::Color::White);
+		t.setFillColor(sf::Color::White);
 		t.setFont(DATABASE.get(arus::Font::DisposableDroid));
 		t.setCharacterSize(35);
 	}
@@ -132,7 +132,7 @@ GUI::GUI(MyWindow& tar)
 
 
 	for (sf::Text& t : hScore){
-		t.setColor(sf::Color::White);
+		t.setFillColor(sf::Color::White);
 		t.setFont(DATABASE.get(arus::Font::DisposableDroid));
 		t.setCharacterSize(100);
 	}

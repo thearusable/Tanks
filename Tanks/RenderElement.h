@@ -10,8 +10,10 @@ class RenderElement
 {
 public:
 	RenderElement(void);
+	RenderElement(arus::Textures texture, sf::Vector2f pos);
+	explicit RenderElement(arus::Textures texture);
 	RenderElement(RenderElement& r);
-	explicit RenderElement(arus::Textures t);
+
 	virtual ~RenderElement();
 
 	//set
@@ -19,7 +21,9 @@ public:
 	void setTextureRect(sf::IntRect& rect);
 	void setTextureAndRect(arus::Textures t, sf::IntRect& rect);
 	void setPosition(float x, float y);
+	void setPosition(sf::Vector2f pos);
 	void setScale(float x, float y);
+	void setScale(sf::Vector2f scale);
 	void setRotation(float x);
 	void setVisible(bool b);
 	void setOrigin(float x, float y);

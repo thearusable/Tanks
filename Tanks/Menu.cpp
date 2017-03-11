@@ -75,6 +75,9 @@ void Menu::render(){
 	target.display();
 }
 void Menu::choose(){
+
+	if (!DATABASE.isFullyLoaded() && currenltyChoosed != 3) return;
+
 	if (DATABASE.getStats().isCustomMap == true)
 	{
 		DATABASE.getStats().resetToDefaultStats();

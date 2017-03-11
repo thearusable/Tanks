@@ -7,16 +7,9 @@
 DataBase DATABASE;
 
 void main(){
+	
+	DATABASE.load();
 
-	try{
-		DATABASE.loadFont();
-	}
-	catch (const char* s){
-		system("cls");
-		std::cout << s << std::endl;
-		system("pause");
-		return;
-	}
 
 	MyWindow window(sf::VideoMode(864, 673, 32), "Tanks");
 	try{
@@ -35,7 +28,7 @@ void main(){
 		window.draw(loading);
 		window.display();
 
-		DATABASE.load();
+		//DATABASE.load();
 
 	}
 	catch (const char * s){
@@ -47,5 +40,7 @@ void main(){
 
 	Menu menu(window);
 	menu.start();
+
+	//t.hardware_concurrency();
 
 }

@@ -14,6 +14,7 @@
 
 #include"arus.h"
 #include"ResourceHolder.h"
+#include"MyThread.h"
 
 struct Stats
 {
@@ -74,13 +75,15 @@ public:
 	
 
 	bool isFullyLoaded();
+	void interrupt();
 
 private:
 	void loadMenuItems(); 
 	void loadResources(); //ladowanie zasobow
 
 	std::mutex mu;
-	std::thread* thread;
+	//std::thread* thread;
+	MyThread* myThread;
 
 	bool allLoaded = false;
 	Stats stats;

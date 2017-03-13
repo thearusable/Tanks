@@ -102,6 +102,13 @@ void Menu::choose(){
 	}
 	else if (currenltyChoosed == 3){ //exit 
 		target.close();
+		//try {
+		//	DATABASE.interrupt();
+		//}
+		//catch (std::logic_error& err) {
+		//	std::cout << err.what() << std::endl;
+		//}
+		
 	}
 	
 }

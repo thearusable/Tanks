@@ -2,18 +2,20 @@
 
 
 DataBase::~DataBase() {
-	if (thread && thread->joinable()) {
-		std::cout << "Join from destructor." << std::endl;
-		thread->join();
-		delete thread;
-	}
+	//if (thread && thread->joinable()) {
+	//	std::cout << "Join from destructor." << std::endl;
+	//	thread->join();
+		//delete thread;
+	//}
+	if (myThread) delete myThread;
 }
 
 void DataBase::load() {
 	//in main thread
 	loadMenuItems();
 	//other thread
-	thread = new std::thread([this] {loadResources(); });
+	//thread = new std::thread([this] {loadResources(); });
+	myThread = new MyThread(std::thread([this] {loadResources(); }));
 }
 
 void DataBase::loadMenuItems() {
@@ -100,12 +102,17 @@ void DataBase::loadResources(){
 bool DataBase::isFullyLoaded() {
 	if (allLoaded == false) return false;
 
-	if (thread->joinable()) {
-		std::cout << "Loader Thread Joined." << std::endl;
-		thread->join();
+	if (myThread->joinable()) {
+		//std::cout << "Loader Thread Joined." << std::endl;
+		//thread->join();
+		delete myThread;
 	}
 
 	return true;
+}
+
+void DataBase::interrupt(){
+	if (myThread) myThread->interrupt();
 }
 
 sf::Texture& DataBase::get(arus::Textures t){

@@ -3,11 +3,20 @@
 #include"DataBase.h"
 #include"MyWindow.h"
 #include"Menu.h"
+#include "Task.h"
+#include "ThreadManager.h"
 
 DataBase DATABASE;
 
 void main(){
 	
+	Task test = Task();
+	test = [] {std::cout << "FROM LAMBDA" << std::endl; };
+	MyThread t(test);
+
+	ThreadManager manager;
+
+
 	DATABASE.load();
 
 

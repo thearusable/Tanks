@@ -7,8 +7,14 @@
 #include<SFML/Graphics/Font.hpp>
 #include<iostream>
 #include<fstream>
+
+#include<thread>
+#include<mutex>
+#include <windows.h>
+
 #include"arus.h"
 #include"ResourceHolder.h"
+#include"MyThread.h"
 
 struct Stats
 {
@@ -54,7 +60,9 @@ struct Stats
 class DataBase
 {
 public:
-	void loadFont();
+
+	~DataBase();
+	//void loadFont();
 	void load();
 
 	//using to get texture (param: arus::Textures)
@@ -64,9 +72,20 @@ public:
 	//using to get Configuration
 	Stats& getStats();
 
+	
+
+	bool isFullyLoaded();
+	void interrupt();
+
 private:
+	void loadMenuItems(); 
 	void loadResources(); //ladowanie zasobow
 
+	std::mutex mu;
+	//std::thread* thread;
+	MyThread* myThread;
+
+	bool allLoaded = false;
 	Stats stats;
 	ResourceHolder<sf::Texture, arus::Textures>TextureHolder;
 	ResourceHolder<sf::Font, arus::Font> FontHolder;

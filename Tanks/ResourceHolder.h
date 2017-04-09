@@ -20,6 +20,7 @@ public:
 		}
 
 		// If loading successful, insert resource to map
+		std::cout << "Loaded: " << filename << std::endl;
 		insertResource(id, std::move(resource));
 		return true;
 	}

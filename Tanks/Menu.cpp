@@ -72,7 +72,14 @@ void Menu::render() {
 
 	target.display();
 }
+<<<<<<< HEAD
 void Menu::choose() {
+=======
+void Menu::choose(){
+
+	if (!DATABASE.isFullyLoaded() && currenltyChoosed != 3) return;
+
+>>>>>>> origin/master
 	if (DATABASE.getStats().isCustomMap == true)
 	{
 		DATABASE.getStats().resetToDefaultStats();
@@ -97,5 +104,12 @@ void Menu::choose() {
 	}
 	else if (currenltyChoosed == 3) { //exit
 		target.close();
+		//try {
+		//	DATABASE.interrupt();
+		//}
+		//catch (std::logic_error& err) {
+		//	std::cout << err.what() << std::endl;
+		//}
+		
 	}
 }

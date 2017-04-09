@@ -3,9 +3,12 @@
 #include"DataBase.h"
 #include"MyWindow.h"
 #include"Menu.h"
+#include "Task.h"
+#include "ThreadManager.h"
 
 DataBase DATABASE;
 
+<<<<<<< HEAD
 void main() {
 	try {
 		DATABASE.loadFont();
@@ -16,6 +19,19 @@ void main() {
 		system("pause");
 		return;
 	}
+=======
+void main(){
+	
+	Task test = Task();
+	test = [] {std::cout << "FROM LAMBDA" << std::endl; };
+	MyThread t(test);
+
+	ThreadManager manager;
+
+
+	DATABASE.load();
+
+>>>>>>> origin/master
 
 	MyWindow window(sf::VideoMode(864, 673, 32), "Tanks");
 	try {
@@ -34,7 +50,12 @@ void main() {
 		window.draw(loading);
 		window.display();
 
+<<<<<<< HEAD
 		DATABASE.load();
+=======
+		//DATABASE.load();
+
+>>>>>>> origin/master
 	}
 	catch (const char * s) {
 		system("cls");
@@ -45,4 +66,11 @@ void main() {
 
 	Menu menu(window);
 	menu.start();
+<<<<<<< HEAD
 }
+=======
+
+	//t.hardware_concurrency();
+
+}
+>>>>>>> origin/master

@@ -1,6 +1,6 @@
 #pragma once
 #include "MapElement.h"
-class Node 
+class Node
 {
 public:
 	Node();
@@ -14,7 +14,7 @@ public:
 	int getGScore(Node* node);
 	int getHScore(Node* node);
 	void computeScores(Node* endNode);
-	
+
 	bool hasParent();
 	sf::Vector2i getIndex();
 
@@ -29,4 +29,3 @@ public:
 	//type of ground
 	arus::Textures TextureType;
 };
-

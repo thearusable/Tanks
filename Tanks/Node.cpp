@@ -1,6 +1,5 @@
 #include "Node.h"
 
-
 Node::Node()
 {
 	mustDestroy = false;
@@ -41,7 +40,6 @@ sf::Vector2i Node::getIndex() {
 }
 
 int Node::getGScore(Node* p) {
-	
 	int temp = 0;
 	if (TextureType == arus::Textures::grass) temp -= 5;
 	if (TextureType == arus::Textures::brick || TextureType == arus::Textures::steel) temp += 50;

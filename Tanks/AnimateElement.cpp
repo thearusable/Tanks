@@ -1,6 +1,5 @@
 #include "AnimateElement.h"
 
-
 AnimateElement::AnimateElement(arus::Textures t, sf::Vector2f pos, sf::Vector2f size, bool r, float timestep)
 	:repeated(r)
 	, timeStep(0.5f)
@@ -18,23 +17,23 @@ AnimateElement::AnimateElement(arus::Textures t, sf::Vector2f pos, sf::Vector2f 
 	this->setOriginToCenter();
 }
 
-bool AnimateElement::update(){
+bool AnimateElement::update() {
 	if (this == nullptr) {
 		return true;
 	}
 
-	if (colldown <= 0){
+	if (colldown <= 0) {
 		colldown = timeToChange;
 		whichFrame++;
-		if (whichFrame * sliceSize.x >= textureSize.x){
-			if (repeated){
+		if (whichFrame * sliceSize.x >= textureSize.x) {
+			if (repeated) {
 				whichFrame = 0;
 				this->setTextureRect(sf::IntRect(0, 0, sliceSize.x, sliceSize.y));
 				return false;
 			}
 			else return true;
 		}
-		else{
+		else {
 			this->setTextureRect(sf::IntRect(whichFrame * sliceSize.x, 0, sliceSize.x, sliceSize.y));
 		}
 	}

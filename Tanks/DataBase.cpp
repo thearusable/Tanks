@@ -1,18 +1,17 @@
 #include "DataBase.h"
 
-
-void DataBase::loadFont(){
+void DataBase::loadFont() {
 	//wczytywanie czcionek
 	if (!FontHolder.load(arus::Font::DisposableDroid, "Data/Fonts/DisposableDroidBB_bld.otf"))
 		throw "Wystapil blad podczas wczytywania czcionek.";
 }
 
-void DataBase::load(){
+void DataBase::load() {
 	stats.resetToDefaultStats();
 	loadResources();
 }
 
-void DataBase::loadResources(){
+void DataBase::loadResources() {
 	//wczytywanie tekstur
 	if (TextureHolder.load(arus::Textures::brick, "Data/Textures/brick.jpg") &&
 		TextureHolder.load(arus::Textures::logo, "Data/Textures/logo.png") &&
@@ -49,7 +48,7 @@ void DataBase::loadResources(){
 		TextureHolder.load(arus::Textures::swim, "Data/Textures/additionalSwim.png") &&
 		TextureHolder.load(arus::Textures::bulletDestroy, "Data/Textures/bullet_destroy.png") &&
 		TextureHolder.load(arus::Textures::shield, "Data/Textures/additionalShield.png")
-		){
+		) {
 	}
 	else {
 		throw "Wystapil blad podczas wczytywania tekstur";
@@ -57,16 +56,14 @@ void DataBase::loadResources(){
 	std::cout << "Wczytywanie zakonczono sukcesem." << std::endl;
 }
 
-sf::Texture& DataBase::get(arus::Textures t){
+sf::Texture& DataBase::get(arus::Textures t) {
 	return TextureHolder.get(t);
 }
 
-sf::Font& DataBase::get(arus::Font f){
+sf::Font& DataBase::get(arus::Font f) {
 	return FontHolder.get(f);
 }
 
-Stats& DataBase::getStats(){
+Stats& DataBase::getStats() {
 	return stats;
 }
-
-

@@ -15,7 +15,7 @@ public:
 	Enemy(Level& poz, std::vector<Bullet*>& bh, int xx, int yy, int spawn);
 	virtual ~Enemy();
 
-	void setPowerUp(PowerUp& p); 
+	void setPowerUp(PowerUp& p);
 	void setPowerUp(arus::PowerUp p);
 	arus::PowerUp getPowerUp();
 	void update(float deltaTime);
@@ -24,9 +24,9 @@ public:
 	int pointsFromKill, spawnPoint;
 	arus::EnemyType Type;
 	bool specialEnemy;
-	
+
 	/////////below to path finding and ai logic
-	
+
 	void calculateNextDir();
 	void nextTarget();
 
@@ -42,9 +42,8 @@ protected:
 	std::vector<Node*> path;
 
 	std::vector<Bullet*>& BulletHolder;
-	Node map[13][13]; 
+	Node map[13][13];
 
 	int IndexX, IndexY, pathTargetX, pathTargetY;
 	Node* currTarget;
 };
-

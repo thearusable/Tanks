@@ -19,7 +19,7 @@ struct Stats
 	unsigned short p2LIVES;
 	unsigned int p2POINTS;
 	//inne
-	unsigned short displayedLevel; //indeks wyswietlany 
+	unsigned short displayedLevel; //indeks wyswietlany
 	unsigned short currLevel; //indeks obecnej mapy
 	unsigned short enemyCount;//ilosc wszystkich przeciwnikow
 	bool isCustomMap; //czy byla tworzona mapa
@@ -46,7 +46,7 @@ struct Stats
 		currLevel = 1;			//indeks obecnej mapy
 		enemyCount = 20;		//ilosc wszystkich przeciwnikow
 		isCustomMap = false;	//czy byla tworzona mapa
-								  
+
 		e1p1 = e1p2 = e2p1 = e2p2 = e3p1 = e3p2 = e4p1 = e4p2 = 0;	//liczba zabitych wrogow
 	}
 };
@@ -70,7 +70,6 @@ private:
 	Stats stats;
 	ResourceHolder<sf::Texture, arus::Textures>TextureHolder;
 	ResourceHolder<sf::Font, arus::Font> FontHolder;
-
 };
 
 #endif

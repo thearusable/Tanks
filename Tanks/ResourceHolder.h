@@ -11,10 +11,10 @@ template<typename Resource, typename ID> class ResourceHolder
 {
 public:
 
-	bool load(typename ID id, const std::string& filename){
+	bool load(typename ID id, const std::string& filename) {
 		// Create and load resource
 		std::unique_ptr<typename Resource> resource(new typename Resource());
-		if (!resource->loadFromFile(filename)){
+		if (!resource->loadFromFile(filename)) {
 			std::cout << "FAILED TO LAOD - " << filename << std::endl;
 			return false;
 		}
@@ -23,7 +23,7 @@ public:
 		insertResource(id, std::move(resource));
 		return true;
 	}
-	typename Resource& get(typename ID id){
+	typename Resource& get(typename ID id) {
 		auto found = mResourceMap.find(id);
 		assert(found != mResourceMap.end());
 
@@ -39,14 +39,13 @@ public:
 	}
 
 private:
-	void insertResource(typename ID id, std::unique_ptr<typename Resource> resource){
+	void insertResource(typename ID id, std::unique_ptr<typename Resource> resource) {
 		// Insert and check success
 		auto inserted = mResourceMap.insert(std::make_pair(id, std::move(resource)));
 		assert(inserted.second);
 	}
 
 	std::map<ID, std::unique_ptr<typename Resource>>	mResourceMap;
-
 };
 
 #endif

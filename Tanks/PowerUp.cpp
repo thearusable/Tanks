@@ -1,37 +1,36 @@
 #include "PowerUp.h"
 
-
 PowerUp::PowerUp(void) :time(0), type()
-	, RenderElement(arus::Textures::empty, sf::Vector2f(0.f,0.f))
+, RenderElement(arus::Textures::empty, sf::Vector2f(0.f, 0.f))
 {
 	this->setVisible(false);
 }
 
-void PowerUp::create(){
+void PowerUp::create() {
 	type = arus::PowerUp(std::rand() % 6);
 
 	//ustalenie tekstury
-	if (type == arus::PowerUp::granade){ //granade
+	if (type == arus::PowerUp::granade) { //granade
 		this->setTexture(arus::Textures::granadePU);
 		time = 0.f;
 	}
-	else if (type == arus::PowerUp::shield){ //shield
+	else if (type == arus::PowerUp::shield) { //shield
 		this->setTexture(arus::Textures::shieldPU);
 		time = 10.f;
 	}
-	else if (type == arus::PowerUp::life){ // life
+	else if (type == arus::PowerUp::life) { // life
 		this->setTexture(arus::Textures::lifePU);
 		time = 0.f;
 	}
-	else if (type == arus::PowerUp::pistol){//pistol
+	else if (type == arus::PowerUp::pistol) {//pistol
 		this->setTexture(arus::Textures::pistolPU);
 		time = 0.f;
 	}
-	else if (type == arus::PowerUp::swim){//swim
+	else if (type == arus::PowerUp::swim) {//swim
 		this->setTexture(arus::Textures::swimPU);
 		time = 0.f;
 	}
-	else if (type == arus::PowerUp::speed){ //speed
+	else if (type == arus::PowerUp::speed) { //speed
 		this->setTexture(arus::Textures::speedPU);
 		time = 15.f;
 	}
@@ -46,15 +45,15 @@ void PowerUp::create(){
 	this->setVisible(true);
 }
 
-void PowerUp::take(){
+void PowerUp::take() {
 	this->setVisible(false);
 	this->setPosition(9999.f, 9999.f);
 }
 
-arus::PowerUp PowerUp::getType(){
+arus::PowerUp PowerUp::getType() {
 	return type;
 }
 
-float PowerUp::getTime(){
+float PowerUp::getTime() {
 	return time;
 }

@@ -16,3 +16,6 @@ Tanks/x64/
 *.VC.db
 *.opendb
 *.db
+*.ipch
+.vs/Tanks/v15/.suo
+*.db

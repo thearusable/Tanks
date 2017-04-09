@@ -52,6 +52,4 @@ protected:
 	arus::bulletType bulletType;
 	sf::Vector2i textureSource;
 	AnimateElement * additional;
-
 };
-

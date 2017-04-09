@@ -9,13 +9,12 @@ Menu::Menu(MyWindow& window)
 	, text()
 	, currenltyChoosed(0)
 {
-
 	std::string s[4] = { "One Player", "Two Players", "Construction", "Exit" };
 
 	logo.setPosition((window.getSize().x / 2.f) - logo.getLocalBounds().width / 2.f, window.getSize().y * 0.1f);
 	logo.setOrigin(0.0f, 0.f);
 
-	for (int i = 0; i<4; i++){
+	for (int i = 0; i < 4; i++) {
 		text[i].setFont(DATABASE.get(arus::Font::DisposableDroid));
 		text[i].setString(s[i]);
 		text[i].setCharacterSize(40);
@@ -27,21 +26,20 @@ Menu::Menu(MyWindow& window)
 	tank.setOrigin(0.0f, 0.f);
 }
 
-void Menu::start(){//fixed update
-	while (target.isOpen()){
+void Menu::start() {//fixed update
+	while (target.isOpen()) {
 		events();
 		update();
 		render();
 	}
 }
 
-void Menu::events(){
+void Menu::events() {
 	sf::Event e;
-	while (target.pollEvent(e)){
-
-		switch (e.type){
+	while (target.pollEvent(e)) {
+		switch (e.type) {
 		case sf::Event::KeyPressed:
-			if (e.key.code == sf::Keyboard::Up){
+			if (e.key.code == sf::Keyboard::Up) {
 				currenltyChoosed--;
 				if (currenltyChoosed < 0) currenltyChoosed = 3;
 			}
@@ -58,13 +56,13 @@ void Menu::events(){
 	}
 }
 
-void Menu::update(){
+void Menu::update() {
 	sf::Vector2f pos = text[currenltyChoosed].getPosition();
 	tank.setPosition(pos.x - 70, pos.y + 10);
 	tank.update();
 }
 
-void Menu::render(){
+void Menu::render() {
 	target.clear(sf::Color::Black);
 
 	logo >> target;
@@ -74,31 +72,30 @@ void Menu::render(){
 
 	target.display();
 }
-void Menu::choose(){
+void Menu::choose() {
 	if (DATABASE.getStats().isCustomMap == true)
 	{
 		DATABASE.getStats().resetToDefaultStats();
 		DATABASE.getStats().isCustomMap = true;
 		DATABASE.getStats().currLevel = 0;
-	} else {
+	}
+	else {
 		DATABASE.getStats().resetToDefaultStats();
 	}
-	
 
-	if (currenltyChoosed == 0){ // 1
+	if (currenltyChoosed == 0) { // 1
 		Game game(target);
 		game.run();
 	}
-	else if (currenltyChoosed == 1){ //2 
-		Game game(target,true);
+	else if (currenltyChoosed == 1) { //2
+		Game game(target, true);
 		game.run();
 	}
-	else if (currenltyChoosed == 2){ // con
+	else if (currenltyChoosed == 2) { // con
 		Construction con(target);
 		con.start();
 	}
-	else if (currenltyChoosed == 3){ //exit 
+	else if (currenltyChoosed == 3) { //exit
 		target.close();
 	}
-	
 }

@@ -2,15 +2,15 @@
 #define ARUS_H
 #pragma once
 
-namespace arus{
-	enum class Direction{
+namespace arus {
+	enum class Direction {
 		none,
 		up,
 		down,
 		left,
 		right,
 	};
-	enum class Textures{
+	enum class Textures {
 		//map
 		empty = 0,
 		ice,
@@ -54,12 +54,11 @@ namespace arus{
 		pistolPU,
 		swimPU,
 		speedPU,
-
 	};
-	enum class Font{
+	enum class Font {
 		DisposableDroid,
 	};
-	enum class PowerUp{
+	enum class PowerUp {
 		none = 6,
 		granade = 0,
 		shield = 1,
@@ -68,24 +67,23 @@ namespace arus{
 		swim = 4,
 		speed = 5,
 	};
-	enum class bulletType{
+	enum class bulletType {
 		normal = 0,
 		super = 1,
 	};
-	enum class EnemyType{
+	enum class EnemyType {
 		random,
 		normal,
 		heavy,
 		fast,
 	};
-	enum class STATE{
+	enum class STATE {
 		STATE_PATROL = 0,
 		STATE_ATAK = 1,
 	};
-	enum class EVENT_ID{
+	enum class EVENT_ID {
 		ID_WIDAC_GRACZA = 101,
 	};
-
 }
 
 #endif

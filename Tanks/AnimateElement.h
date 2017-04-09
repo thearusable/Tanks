@@ -17,6 +17,4 @@ protected:
 	int whichFrame;
 
 	bool repeated;
-
 };
-

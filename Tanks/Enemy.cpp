@@ -47,9 +47,9 @@ Enemy::Enemy(Level& l, std::vector<Bullet*>& bh, int xx, int yy, int spawn)
 	this->setScale(0.9f, 0.9f);
 	this->updateTexture();
 
-	//to logic 
+	//to logic
 	path.clear();
-	
+
 	for (int x = 0; x < 13; x++) {
 		for (int y = 0; y < 13; y++) {
 			map[x][y] = Node(level.getMapElement(x, y), x, y);
@@ -59,7 +59,6 @@ Enemy::Enemy(Level& l, std::vector<Bullet*>& bh, int xx, int yy, int spawn)
 	calcRandomCoord();
 	astar();
 }
-
 
 Enemy::~Enemy(void)
 {
@@ -89,7 +88,7 @@ void Enemy::update(float deltaTime) {
 	if (colldown > 0.0f) colldown -= deltaTime;
 
 	//tryShoot();
-	if (path.empty()) { 
+	if (path.empty()) {
 		calcRandomCoord();
 		astar();
 	}
@@ -101,7 +100,6 @@ void Enemy::update(float deltaTime) {
 	}
 
 	//if (currTarget != nullptr) {
-		
 	//	std::cout << "posX: " << posX << " posY: " << posY << std::endl;
 	//
 	//	//if(currTarget->mustDestroy == true){
@@ -123,7 +121,6 @@ void Enemy::update(float deltaTime) {
 	//calculateNextDir();
 	//setDirection(currDirection);
 	//this->ride(currDirection, rideSpeed*deltaTime);
-
 }
 
 void Enemy::followPath(float deltaTime) {
@@ -163,7 +160,6 @@ void Enemy::followPath(float deltaTime) {
 	else {
 		path.pop_back();
 	}
-
 }
 
 void Enemy::calculateNextDir() {
@@ -198,7 +194,7 @@ void Enemy::calculateNextDir() {
 
 void Enemy::nextTarget() {
 	if (path.empty()) {
-		pathTargetX = rand() % 13;  //tu beda losowania 
+		pathTargetX = rand() % 13;  //tu beda losowania
 		pathTargetY = rand() % 13;
 		astar();
 	}
@@ -210,9 +206,7 @@ void Enemy::nextTarget() {
 		//currDirection = calculateNextDir();
 	}
 	else currTarget = nullptr;
-	
 }
-
 
 void Enemy::calcRandomCoord()
 {
@@ -243,23 +237,22 @@ void Enemy::calcRandomCoord()
 //PATHFINDER
 //indeksy pola do ktorych ma dotrzec
 void Enemy::astar() {
-
 	path.clear();
-	
-	int tab[4][2] = {	{ -1,0 }, //left
+
+	int tab[4][2] = { { -1,0 }, //left
 						{ 1,0 }, //right
 						{ 0,-1 }, //up
 						{ 0,1 } }; //down
 
-	Node *start = &map[IndexX][IndexY]; 
+	Node *start = &map[IndexX][IndexY];
 	Node *end = &map[pathTargetX][pathTargetY];//
 	//std::cout << "Target: x: " << pathTargetX << " y: " << pathTargetY << std::endl;
 
 	Node *current = start; //
 	Node *child = nullptr; //
 
-	NodeList visited; 
-	NodeList open; 
+	NodeList visited;
+	NodeList open;
 	std::list<Node*>::iterator i;
 
 	start->inOpenList = true;
@@ -268,8 +261,8 @@ void Enemy::astar() {
 	sf::Vector2i curr(IndexX, IndexY);
 	sf::Vector2i temp;
 
-	while (!open.empty()) 
-	{ 
+	while (!open.empty())
+	{
 		current->computeScores(end);
 		for (i = open.begin(); i != open.end(); ++i) { //2a
 			(*i)->computeScores(end);
@@ -281,7 +274,7 @@ void Enemy::astar() {
 		open.remove(current);
 		current->inOpenList = false;
 		visited.push_back(current);
-		current->inClosedList = true; 
+		current->inClosedList = true;
 
 		//if current == target the brak
 		if (current == end) break;
@@ -293,8 +286,8 @@ void Enemy::astar() {
 			temp.y += tab[x][1]; //ok
 
 			//pominiecie obszaru poza mapa
-			if (temp.x<0 || temp.x> 12) continue;
-			if (temp.y<0 || temp.y> 12) continue; 
+			if (temp.x < 0 || temp.x> 12) continue;
+			if (temp.y < 0 || temp.y> 12) continue;
 			//pominiecie klockow po ktorych nie moze jechac i ich rozwalic
 			if (map[temp.x][temp.y].TextureType == arus::Textures::water && powerUpType != arus::PowerUp::swim) continue;
 			if (map[temp.x][temp.y].TextureType == arus::Textures::steel && bulletType != arus::bulletType::super) continue;
@@ -316,7 +309,6 @@ void Enemy::astar() {
 			}
 		}
 		if (child != nullptr && child->x == end->x && child->y == end->y) break;
-	
 	} //to dziala
 
 	if (path.size() == 0) {
@@ -335,7 +327,7 @@ void Enemy::astar() {
 	}
 
 	current = end;
-	while (current->hasParent() && current != start) //odbudowanie 
+	while (current->hasParent() && current != start) //odbudowanie
 	{
 		path.push_back(current);
 		current = current->parent;
@@ -344,7 +336,7 @@ void Enemy::astar() {
 	for (unsigned int i = 0; i < path.size(); i++) {
 		auto tex = map[path[i]->getIndex().x][path[i]->getIndex().y].TextureType;
 		if (tex == arus::Textures::brick ||
-			(tex == arus::Textures::steel && getBulletType() == arus::bulletType::super )) {
+			(tex == arus::Textures::steel && getBulletType() == arus::bulletType::super)) {
 			path[i]->mustDestroy = true;
 		}
 		else {
@@ -357,7 +349,6 @@ void Enemy::astar() {
 	//for (auto a : path) {
 	//	std::cout << "path x: " << a->x << " y: " << a->y <<" MustD: "<< a->mustDestroy << std::endl;
 	//}
-
 }
 
 void Enemy::setPowerUp(PowerUp& p) {

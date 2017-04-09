@@ -6,12 +6,11 @@
 
 DataBase DATABASE;
 
-void main(){
-
-	try{
+void main() {
+	try {
 		DATABASE.loadFont();
 	}
-	catch (const char* s){
+	catch (const char* s) {
 		system("cls");
 		std::cout << s << std::endl;
 		system("pause");
@@ -19,7 +18,7 @@ void main(){
 	}
 
 	MyWindow window(sf::VideoMode(864, 673, 32), "Tanks");
-	try{
+	try {
 		window.setFramerateLimit(60);
 		int a = sf::VideoMode::getDesktopMode().width;
 		window.setPosition(sf::Vector2i(int((a - 864) / 2.f), 10));
@@ -30,15 +29,14 @@ void main(){
 		loading.setCharacterSize(30);
 		loading.setFont(DATABASE.get(arus::Font::DisposableDroid));
 		loading.setString("Wczytywanie...");
-		loading.setPosition(window.getSize().x /2.f - loading.getLocalBounds().width /2.f
-							, window.getSize().y /2.f - loading.getLocalBounds().height /2.f);
+		loading.setPosition(window.getSize().x / 2.f - loading.getLocalBounds().width / 2.f
+			, window.getSize().y / 2.f - loading.getLocalBounds().height / 2.f);
 		window.draw(loading);
 		window.display();
 
 		DATABASE.load();
-
 	}
-	catch (const char * s){
+	catch (const char * s) {
 		system("cls");
 		std::cout << s << std::endl;
 		system("pause");
@@ -47,5 +45,4 @@ void main(){
 
 	Menu menu(window);
 	menu.start();
-
 }

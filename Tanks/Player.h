@@ -21,4 +21,3 @@ protected:
 	bool isFirstPlayer;
 	Stats& stats;
 };
-

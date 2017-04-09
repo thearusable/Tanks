@@ -23,4 +23,3 @@ private:
 	arus::Direction mDirection;
 	arus::bulletType mType;
 };
-

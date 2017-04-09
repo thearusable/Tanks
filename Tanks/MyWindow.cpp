@@ -7,20 +7,20 @@ MyWindow::MyWindow() :RenderWindow(), showFPS(true)
 	this->initialize();
 }
 
-MyWindow::MyWindow(VideoMode Mode, const std::string &Title) 
+MyWindow::MyWindow(VideoMode Mode, const std::string &Title)
 	: RenderWindow(Mode, Title)
 	, showFPS(true)
 {
 	this->initialize();
 }
 
-MyWindow::~MyWindow(){}
+MyWindow::~MyWindow() {}
 
-BOOL MyWindow::initialize(){
+BOOL MyWindow::initialize() {
 	FPS.setCharacterSize(30);
 	FPS.setFillColor(sf::Color::Yellow);
 	FPS.setFont(DATABASE.get(arus::Font::DisposableDroid));
-	FPS.setPosition(10,5);
+	FPS.setPosition(10, 5);
 
 	timeFromLastFPSShow = 0.f;
 
@@ -30,7 +30,7 @@ BOOL MyWindow::initialize(){
 	return QueryPerformanceCounter(&timeLastFrame);
 }
 
-void MyWindow::newFrame(){
+void MyWindow::newFrame() {
 	LARGE_INTEGER thisTime, delta;
 	QueryPerformanceCounter(&thisTime);
 	delta.QuadPart = thisTime.QuadPart - timeLastFrame.QuadPart;
@@ -39,22 +39,22 @@ void MyWindow::newFrame(){
 	timeFromLastFPSShow += timeElapsedLastFrame();
 }
 
-void MyWindow::display(){
+void MyWindow::display() {
 	if (timeFromLastFPSShow > 0.3f) {
 		FPS.setString(std::to_string(int(1 / deltaTime)));
 		timeFromLastFPSShow = 0.f;
 	}
-	if (showFPS){	
+	if (showFPS) {
 		this->draw(FPS);
 	}
 	RenderWindow::display();
 	this->newFrame();
 }
 
-void MyWindow::setDisplayFPS(bool b){
+void MyWindow::setDisplayFPS(bool b) {
 	showFPS = b;
 }
 
-float MyWindow::timeElapsedLastFrame(){
+float MyWindow::timeElapsedLastFrame() {
 	return deltaTime;
 }

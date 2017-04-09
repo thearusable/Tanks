@@ -29,4 +29,3 @@ private:
 
 	bool stillBuildingMap, itSaved;
 };
-

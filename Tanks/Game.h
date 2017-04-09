@@ -44,9 +44,8 @@ protected:
 	AnimateElement * SpawnPoints[5];
 	bool PointsToSpawn[3];
 	bool isTwoPlayers, isGameOver, isSummary, mapCompleted;//
-	
+
 	int EnemyToSpawn, numerPoziomu;
-	
+
 	Stats& stats;
 };
-

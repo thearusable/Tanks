@@ -2,7 +2,7 @@
 
 extern DataBase DATABASE;
 
-Level::Level(void) :elementy(), mEdge(), background(){
+Level::Level(void) :elementy(), mEdge(), background() {
 	//pozycja mapy
 	mapPosition.x = 30;
 	mapPosition.y = 25;
@@ -12,11 +12,10 @@ Level::Level(void) :elementy(), mEdge(), background(){
 	background.setSize(sf::Vector2f(13 * 54.f, 13 * 48.f));
 	background.setPosition(mapPosition);
 
-	for (int i = 0; i<4; i++){
-		
+	for (int i = 0; i < 4; i++) {
 		mEdge[i].setSize(sf::Vector2f(15 * 54.f, 50.f));
 		mEdge[i].setTexture(arus::Textures::brick);
-		mEdge[i].setOrigin(0.f,0.f);
+		mEdge[i].setOrigin(0.f, 0.f);
 	}
 	mEdge[0].setPosition(0.f, mapPosition.y + 24 - mEdge[0].getLocalBounds().height); //top - ready
 	mEdge[1].setPosition(0.f, mapPosition.y + 24 + 13 * 48.f); //bot - ready
@@ -25,8 +24,7 @@ Level::Level(void) :elementy(), mEdge(), background(){
 	mEdge[3].setRotation(90.f);
 	mEdge[3].setPosition(mapPosition.x + 24 + 13 * 54.f, mapPosition.y); //right
 
-
-	elementy[0] = RenderElement(arus::Textures::empty, sf::Vector2f(0.f,0.f));
+	elementy[0] = RenderElement(arus::Textures::empty, sf::Vector2f(0.f, 0.f));
 	elementy[1].setTextureAndRect(arus::Textures::brick, sf::IntRect(0, 0, 54, 48));
 	elementy[2].setTextureAndRect(arus::Textures::brick, sf::IntRect(0, 0, 27, 48));
 	elementy[3].setTextureAndRect(arus::Textures::brick, sf::IntRect(27, 0, 27, 48));
@@ -45,68 +43,62 @@ Level::Level(void) :elementy(), mEdge(), background(){
 	elementy[14].setTexture(arus::Textures::eagle); //eagle
 
 	this->clearMap();
-
 }
 
-
-void Level::operator>(MyWindow& target){ //wszystko poza zielenia
+void Level::operator>(MyWindow& target) { //wszystko poza zielenia
 	target.draw(background);
 	for (unsigned int i = 0; i < 13; i++)
-		for (unsigned int j = 0; j < 13; j++){
+		for (unsigned int j = 0; j < 13; j++) {
 			arus::Textures t = mTiledMap[i][j].getTextureID();
 			if (t != arus::Textures::empty && t != arus::Textures::grass)
 				mTiledMap[i][j] >> target;
 		}
 }
 
-void Level::operator>>(MyWindow& target){// rysowanie zieleni
+void Level::operator>>(MyWindow& target) {// rysowanie zieleni
 	for (unsigned int i = 0; i < 13; i++)
 		for (unsigned int j = 0; j < 13; j++)
 			if (mTiledMap[i][j].getTextureID() == arus::Textures::grass)
 				mTiledMap[i][j] >> target;
-
 }
 
-void Level::destroyElementOfMap(unsigned int x, unsigned int y){
+void Level::destroyElementOfMap(unsigned int x, unsigned int y) {
 	mTiledMap[x][y] = elementy[0];
 }
 
-void Level::clearMap(){
+void Level::clearMap() {
 	for (int i = 0; i < 13; i++)
-		for (int j = 0; j < 13; j++){
+		for (int j = 0; j < 13; j++) {
 			mTiledMap[i][j] = elementy[0];
 			mTiledMap[i][j].setPosition(i * 54.f + 30.f + 27.f, j * 48.f + 25.f + 24.f);
 		}
 }
 
-void Level::loadMap(unsigned int x){
+void Level::loadMap(unsigned int x) {
 	this->clearMap();
 
 	std::fstream file;
-	
 
 	unsigned int xx = x;
-	while (true){
-		try{
+	while (true) {
+		try {
 			std::string sciezka = "Data/Levels/" + std::to_string(xx) + ".txt";
-			
+
 			file.open(sciezka, std::ios::in);
-			if (!file.good()){
+			if (!file.good()) {
 				throw "!!!";
 			}
 			break;
 		}
-		catch (const char *){
+		catch (const char *) {
 			xx = 1;
 			DATABASE.getStats().currLevel = 1;
 		}
 	}
 
 	int a = 0, b = 0, tempX, tempY, posX, posY, id;
-	while (file.good()){
-
-		if (file >> tempY){
-
+	while (file.good()) {
+		if (file >> tempY) {
 			file >> tempX >> id >> posX >> posY;
 
 			mTiledMap[tempX][tempY] = elementy[id];
@@ -117,13 +109,12 @@ void Level::loadMap(unsigned int x){
 			else mTiledMap[tempX][tempY].setColliderWithTank(true);
 			if (id == 13 || id == 12 || id == 11) mTiledMap[tempX][tempY].setColliderWithBullet(false);
 			else mTiledMap[tempX][tempY].setColliderWithBullet(true);
-
 		}
 	}
 
 	file.close();
 }
 
-MapElement& Level::getMapElement(int x, int y){
+MapElement& Level::getMapElement(int x, int y) {
 	return mTiledMap[x][y];
 }

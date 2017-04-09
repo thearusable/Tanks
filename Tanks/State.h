@@ -10,7 +10,7 @@ class State
 	int* m_piInputs; //wejsciowa tablica dla przejsc
 	int* m_piOutputState; //wyjsciowa tablica stanow
 	int m_iStateID; //unikatoy indentyfikator stanu
-	
+
 public:
 	State(int iStateID, unsigned usTransistion); ////
 	State(State& state);

@@ -9,8 +9,8 @@ typedef std::map<int, State, std::less<int> > StateMap;
 
 class FSM
 {
-	StateMap m_map; 
-	int m_iCurrentState; 
+	StateMap m_map;
+	int m_iCurrentState;
 
 public:
 	FSM(int iStateID); //

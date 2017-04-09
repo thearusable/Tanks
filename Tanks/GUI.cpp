@@ -16,7 +16,7 @@ GUI::GUI(MyWindow& tar)
 	, player2elements()
 	, underline()
 {
-	for (sf::Text& t : Teksty){
+	for (sf::Text& t : Teksty) {
 		t.setFont(DATABASE.get(arus::Font::DisposableDroid));
 		t.setCharacterSize(40);
 		t.setFillColor(sf::Color::Black);
@@ -56,12 +56,12 @@ GUI::GUI(MyWindow& tar)
 	Teksty[6].setString(std::to_string(stats.p2LIVES)); //zycia 2 gracza
 	Teksty[6].setPosition(780, 415);
 
-	for (sf::Text& t : player1){
+	for (sf::Text& t : player1) {
 		t.setFillColor(sf::Color::White);
 		t.setFont(DATABASE.get(arus::Font::DisposableDroid));
 		t.setCharacterSize(35);
 	}
-	for (sf::Text& t : player2){
+	for (sf::Text& t : player2) {
 		t.setFillColor(sf::Color::White);
 		t.setFont(DATABASE.get(arus::Font::DisposableDroid));
 		t.setCharacterSize(35);
@@ -130,8 +130,7 @@ GUI::GUI(MyWindow& tar)
 	player2[10].setPosition(400.f, 490.f);
 	player2[11].setPosition(490.f, 490.f); //
 
-
-	for (sf::Text& t : hScore){
+	for (sf::Text& t : hScore) {
 		t.setFillColor(sf::Color::White);
 		t.setFont(DATABASE.get(arus::Font::DisposableDroid));
 		t.setCharacterSize(100);
@@ -139,18 +138,17 @@ GUI::GUI(MyWindow& tar)
 	hScore[0].setPosition(target.getPosition().x / 2.f - hScore[0].getLocalBounds().width, target.getSize().y / 2.f - 200.f);
 	hScore[1].setPosition(target.getPosition().x / 2.f - hScore[1].getLocalBounds().width, target.getSize().y / 2.f - 100.f);
 	//
-
 }
 
-void GUI::update(const bool& isTwoPlayers, const bool& mapCompleted, const bool& isSummary){
-	if (!mapCompleted){
+void GUI::update(const bool& isTwoPlayers, const bool& mapCompleted, const bool& isSummary) {
+	if (!mapCompleted) {
 		Teksty[1].setString(std::to_string(stats.enemyCount)); //ilosc przeciwnikow
 		Teksty[3].setString(std::to_string(stats.p1LIVES)); //zycia 1 gracza
 		Teksty[4].setString(std::to_string(stats.displayedLevel)); //numer rundy
 		Teksty[6].setString(std::to_string(stats.p2LIVES)); //zycia 2 gracza
 	}
-	else{
-		if (isSummary == false){
+	else {
+		if (isSummary == false) {
 			player1[0].setString("I-Player");
 			player1[1].setString("STAGE " + std::to_string(stats.displayedLevel));
 			player1[2].setString(std::to_string(stats.p1POINTS));
@@ -166,7 +164,7 @@ void GUI::update(const bool& isTwoPlayers, const bool& mapCompleted, const bool&
 			player1[12].setString(std::to_string(stats.e1p1 + stats.e2p1 + stats.e3p1 + stats.e4p1));
 			player1[13].setString("Press SPACE to continue");
 
-			if (isTwoPlayers){
+			if (isTwoPlayers) {
 				player2[0].setString("II-Player");
 				player2[1].setString(std::to_string(stats.p2POINTS));
 				player2[2].setString(std::to_string(stats.e1p2));
@@ -183,7 +181,7 @@ void GUI::update(const bool& isTwoPlayers, const bool& mapCompleted, const bool&
 		}
 		else {
 			unsigned int temp;
-			if (isTwoPlayers){
+			if (isTwoPlayers) {
 				if (stats.p1POINTS < stats.p2POINTS) temp = stats.p2POINTS;
 				else temp = stats.p1POINTS;
 			}
@@ -203,10 +201,9 @@ void GUI::update(const bool& isTwoPlayers, const bool& mapCompleted, const bool&
 	}
 }
 
-void GUI::render(const bool& isTwoPlayers, const bool& mapCompleted, const bool& isSummary){
-	if (mapCompleted == false){//rysowanie podczas gry
-
-		if (isTwoPlayers){
+void GUI::render(const bool& isTwoPlayers, const bool& mapCompleted, const bool& isSummary) {
+	if (mapCompleted == false) {//rysowanie podczas gry
+		if (isTwoPlayers) {
 			target.draw(Teksty[5]);
 			target.draw(Teksty[6]);
 			tank_icon[2] >> target;
@@ -217,12 +214,11 @@ void GUI::render(const bool& isTwoPlayers, const bool& mapCompleted, const bool&
 		tank_icon[0] >> target;
 		tank_icon[1] >> target;
 		flaga >> target;
-
 	}
-	else{//loadscreen lub summary
+	else {//loadscreen lub summary
 		target.clear(sf::Color::Black);
 
-		if (isSummary == true){
+		if (isSummary == true) {
 			//gdy podsumowanie
 			for (sf::Text& t : hScore) target.draw(t);
 		}
@@ -231,8 +227,8 @@ void GUI::render(const bool& isTwoPlayers, const bool& mapCompleted, const bool&
 			for (sf::Text& t : player1) target.draw(t);
 			for (RenderElement& r : player1elements) r >> target;
 			target.draw(underline);
-			if (isTwoPlayers){
-				//+ teksty gracza 2 
+			if (isTwoPlayers) {
+				//+ teksty gracza 2
 				for (sf::Text& t : player2) target.draw(t);
 				for (RenderElement& r : player2elements) r >> target;
 			}

@@ -63,8 +63,8 @@ Construction::Construction(MyWindow& window)
 	mapPos.y += 24;
 }
 
-bool Construction::start(){
-	while (target.isOpen() && stillBuildingMap){
+bool Construction::start() {
+	while (target.isOpen() && stillBuildingMap) {
 		events();
 		update();
 		render();
@@ -72,13 +72,12 @@ bool Construction::start(){
 	return itSaved;
 }
 
-void Construction::events(){
+void Construction::events() {
 	sf::Event e;
-	while (target.pollEvent(e)){
-
-		switch (e.type){
+	while (target.pollEvent(e)) {
+		switch (e.type) {
 		case sf::Event::KeyPressed:
-			if (e.key.code == sf::Keyboard::Up){
+			if (e.key.code == sf::Keyboard::Up) {
 				kafelki[cursorVector.x][cursorVector.y].setVisible(true);
 				cursorVector.y -= 1;
 				if (cursorVector.y < 0) cursorVector.y = 12;
@@ -90,13 +89,13 @@ void Construction::events(){
 				if (cursorVector.y > 12) cursorVector.y = 0;
 				kafelki[cursorVector.x][cursorVector.y].setVisible(false);
 			}
-			else if (e.key.code == sf::Keyboard::Left){
+			else if (e.key.code == sf::Keyboard::Left) {
 				kafelki[cursorVector.x][cursorVector.y].setVisible(true);
 				cursorVector.x -= 1;
-				if (cursorVector.x <0) cursorVector.x = 12;
+				if (cursorVector.x < 0) cursorVector.x = 12;
 				kafelki[cursorVector.x][cursorVector.y].setVisible(false);
 			}
-			else if (e.key.code == sf::Keyboard::Right){
+			else if (e.key.code == sf::Keyboard::Right) {
 				kafelki[cursorVector.x][cursorVector.y].setVisible(true);
 				cursorVector.x += 1;
 				if (cursorVector.x > 12) cursorVector.x = 0;
@@ -106,15 +105,15 @@ void Construction::events(){
 				saveMap();
 				stillBuildingMap = false;
 			}
-			else if (e.key.code == sf::Keyboard::LAlt){
+			else if (e.key.code == sf::Keyboard::LAlt) {
 				cursorVector.z++;
 				if (cursorVector.z > 13) cursorVector.z = 0;
 				kafelki[cursorVector.x][cursorVector.y].setVisible(false);
 			}
-			else if (e.key.code == sf::Keyboard::Escape){
+			else if (e.key.code == sf::Keyboard::Escape) {
 				stillBuildingMap = false;
 			}
-			else if (e.key.code == sf::Keyboard::Space){
+			else if (e.key.code == sf::Keyboard::Space) {
 				kafelki[cursorVector.x][cursorVector.y] = elementy[cursorVector.z];
 				kafelki[cursorVector.x][cursorVector.y].setPosition(cursor.getPosition().x, cursor.getPosition().y);
 				if (cursorVector.z == 3 || cursorVector.z == 8) kafelki[cursorVector.x][cursorVector.y].move(27, 0);
@@ -127,13 +126,12 @@ void Construction::events(){
 	}
 }
 
-void Construction::update(){
+void Construction::update() {
 	cursor.setPosition(mapPos.x + cursorVector.x * 54.f, mapPos.y + cursorVector.y * 48.f);
 	underCursor = elementy[cursorVector.z];
 	underCursor.setPosition(cursor.getPosition().x, cursor.getPosition().y);
 	if (cursorVector.z == 3 || cursorVector.z == 8) underCursor.move(27, 0);
 	if (cursorVector.z == 5 || cursorVector.z == 10) underCursor.move(0, 24);
-
 
 	int a = cursorVector.z;
 	if (a + 1 > 13) a = 0;
@@ -143,10 +141,9 @@ void Construction::update(){
 	if (a == 3 || a == 8) nextElement.move(27, 0);
 	if (a == 5 || a == 10) nextElement.move(0, 24);
 	nextElement.setOrigin(0.f, 0.f);
-
 }
 
-void Construction::render(){
+void Construction::render() {
 	target.clear(sf::Color(125, 125, 125, 255));
 	target.draw(backShape);
 	target.draw(backShapeNext);
@@ -162,7 +159,7 @@ void Construction::render(){
 	target.display();
 }
 
-void Construction::saveMap(){
+void Construction::saveMap() {
 	kafelki[6][12] = elementy[14];
 	kafelki[6][12].setPosition(mapPos.x + 6 * 54.f, mapPos.y + 12 * 48.f);
 	kafelkiID[0][0] = kafelkiID[6][0] = kafelkiID[12][0] = kafelkiID[4][12] = kafelkiID[8][12] = 0;
@@ -171,18 +168,16 @@ void Construction::saveMap(){
 
 	stats.isCustomMap = true;
 	stats.currLevel = 0;
-	try{
-
+	try {
 		file.open("Data/Levels/0.txt", std::ios::out); //usuniecie zawartosci
 
-		if (!file.good()){
+		if (!file.good()) {
 			throw "THROW - Nie udalo sie otworzyc pliku - 0.txt";
 		}
 
 		int tempX = 0, tempY = 0;
-		while (file.good()){
-
-			if (kafelkiID[tempX][tempY] > 0){
+		while (file.good()) {
+			if (kafelkiID[tempX][tempY] > 0) {
 				file << tempX << " ";
 				file << tempY << " ";
 				file << kafelkiID[tempX][tempY] << " ";
@@ -195,13 +190,13 @@ void Construction::saveMap(){
 				tempX = 0;
 				tempY++;
 			}
-			if (tempY > 12){
+			if (tempY > 12) {
 				break;
 			}
 		}
 		file.close();
 	}
-	catch (const char *){
+	catch (const char *) {
 		stats.isCustomMap = false;
 		stats.currLevel = 1;
 	}

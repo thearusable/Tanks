@@ -16,4 +16,3 @@ protected:
 	arus::PowerUp type;
 	float time;
 };
-

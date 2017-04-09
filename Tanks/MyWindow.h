@@ -12,7 +12,7 @@ class MyWindow : public sf::RenderWindow
 public:
 	MyWindow();
 	MyWindow(VideoMode Mode, const std::string &Title);
-	
+
 	virtual ~MyWindow();
 
 	void newFrame();

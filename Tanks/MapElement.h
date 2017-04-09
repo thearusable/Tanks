@@ -29,9 +29,7 @@ public:
 	sf::Vector2i GridCords;
 
 protected:
-	
+
 	bool canCollidedWithTank, canCollidedWithBullet;
 	arus::bulletType minimalBulletType;
-
 };
-

@@ -26,3 +26,4 @@ Bloodstone-core/Debug
 Bloodstone-core/x64
 x64/*
 *.a
+build

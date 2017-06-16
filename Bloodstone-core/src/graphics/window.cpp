@@ -43,8 +43,16 @@ bool Window::init() {
 		std::cout << "Failed to create Window!" << std::endl;
 		return false;
 	}
+	
 	glfwMakeContextCurrent(m_Window);
 	glfwSetWindowSizeCallback(m_Window, resize);
+
+	if (glewInit() != GLEW_OK) {
+		std::cout << "Initializing GLEW failed!" << std::endl;
+		return false;
+	}
+	
+	std::cout << "OpenGL: " << glGetString(GL_VERSION);
 	return true;
 }
 

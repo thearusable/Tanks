@@ -19,3 +19,9 @@ Tanks/x64/
 *.ipch
 .vs/Tanks/v15/.suo
 *.db
+.vs/Bloodstone/v15/.suo
+*.db-shm
+*.db-wal
+Bloodstone-core/Debug
+Bloodstone-core/x64
+x64/*

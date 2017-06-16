@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "src/graphics/Window.h"
+#include "graphics/Window.h"
 
 using namespace bs::graphics;
 

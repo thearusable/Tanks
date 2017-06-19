@@ -21,6 +21,24 @@
     <ClCompile Include="graphics\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="debug\Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\LogLevel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\Active.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\LogMessage.inl">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\LogMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug\LogSink.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics\window.h">
@@ -29,5 +47,28 @@
     <ClInclude Include="threads\ThreadSafeQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="debug\LogMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\LogSink.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\Active.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="debug\LogLevel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="debug\LogSink.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

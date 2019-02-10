@@ -1,5 +1,8 @@
-Debug/*
-Release/*
+.Debug/*
+.Release/*
+.vs/*
+__old/*
+
 Tanks.v12.suo
 Tanks.sdf
 Tanks/Release/

@@ -18,9 +18,115 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\AnimateElement.cpp" />
+    <ClCompile Include="..\Source\Bullet.cpp" />
+    <ClCompile Include="..\Source\Construction.cpp" />
+    <ClCompile Include="..\Source\DataBase.cpp" />
+    <ClCompile Include="..\Source\Enemy.cpp" />
+    <ClCompile Include="..\Source\FSM.cpp" />
+    <ClCompile Include="..\Source\Game.cpp" />
+    <ClCompile Include="..\Source\GUI.cpp" />
+    <ClCompile Include="..\Source\Level.cpp" />
+    <ClCompile Include="..\Source\MapElement.cpp" />
+    <ClCompile Include="..\Source\Menu.cpp" />
+    <ClCompile Include="..\Source\MyThread.cpp" />
+    <ClCompile Include="..\Source\MyWindow.cpp" />
+    <ClCompile Include="..\Source\Node.cpp" />
+    <ClCompile Include="..\Source\Player.cpp" />
+    <ClCompile Include="..\Source\PowerUp.cpp" />
+    <ClCompile Include="..\Source\RenderElement.cpp" />
+    <ClCompile Include="..\Source\Source.cpp" />
+    <ClCompile Include="..\Source\State.cpp" />
+    <ClCompile Include="..\Source\Tank.cpp" />
+    <ClCompile Include="..\Source\Task.cpp" />
+    <ClCompile Include="..\Source\ThreadManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\AnimateElement.h" />
+    <ClInclude Include="..\Source\arus.h" />
+    <ClInclude Include="..\Source\Bullet.h" />
+    <ClInclude Include="..\Source\Construction.h" />
+    <ClInclude Include="..\Source\DataBase.h" />
+    <ClInclude Include="..\Source\Enemy.h" />
+    <ClInclude Include="..\Source\FSM.h" />
+    <ClInclude Include="..\Source\Game.h" />
+    <ClInclude Include="..\Source\GUI.h" />
+    <ClInclude Include="..\Source\Level.h" />
+    <ClInclude Include="..\Source\MapElement.h" />
+    <ClInclude Include="..\Source\Menu.h" />
+    <ClInclude Include="..\Source\MyThread.h" />
+    <ClInclude Include="..\Source\MyWindow.h" />
+    <ClInclude Include="..\Source\Node.h" />
+    <ClInclude Include="..\Source\Player.h" />
+    <ClInclude Include="..\Source\PowerUp.h" />
+    <ClInclude Include="..\Source\RenderElement.h" />
+    <ClInclude Include="..\Source\ResourceHolder.h" />
+    <ClInclude Include="..\Source\State.h" />
+    <ClInclude Include="..\Source\Tank.h" />
+    <ClInclude Include="..\Source\Task.h" />
+    <ClInclude Include="..\Source\ThreadManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Assets\Levels\0.txt" />
+    <Text Include="..\Assets\Levels\1.txt" />
+    <Text Include="..\Assets\Levels\10.txt" />
+    <Text Include="..\Assets\Levels\2.txt" />
+    <Text Include="..\Assets\Levels\3.txt" />
+    <Text Include="..\Assets\Levels\4.txt" />
+    <Text Include="..\Assets\Levels\5.txt" />
+    <Text Include="..\Assets\Levels\6.txt" />
+    <Text Include="..\Assets\Levels\7.txt" />
+    <Text Include="..\Assets\Levels\8.txt" />
+    <Text Include="..\Assets\Levels\9.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Assets\Textures\additionalShield.png" />
+    <Image Include="..\Assets\Textures\additionalSwim.png" />
+    <Image Include="..\Assets\Textures\arrows.jpg" />
+    <Image Include="..\Assets\Textures\brick.jpg" />
+    <Image Include="..\Assets\Textures\bullet.png" />
+    <Image Include="..\Assets\Textures\bulletS.png" />
+    <Image Include="..\Assets\Textures\bullet_destroy.png" />
+    <Image Include="..\Assets\Textures\cursor.png" />
+    <Image Include="..\Assets\Textures\eagle.jpg" />
+    <Image Include="..\Assets\Textures\eagle_dead.png" />
+    <Image Include="..\Assets\Textures\enemy_fast.png" />
+    <Image Include="..\Assets\Textures\enemy_heavy.png" />
+    <Image Include="..\Assets\Textures\enemy_normal.png" />
+    <Image Include="..\Assets\Textures\enemy_random.png" />
+    <Image Include="..\Assets\Textures\flaga.png" />
+    <Image Include="..\Assets\Textures\granade.png" />
+    <Image Include="..\Assets\Textures\grass.png" />
+    <Image Include="..\Assets\Textures\ice.jpg" />
+    <Image Include="..\Assets\Textures\life.png" />
+    <Image Include="..\Assets\Textures\logo.png" />
+    <Image Include="..\Assets\Textures\mapTextures.png" />
+    <Image Include="..\Assets\Textures\pistol.png" />
+    <Image Include="..\Assets\Textures\player-1-1.png" />
+    <Image Include="..\Assets\Textures\player-1-2.png" />
+    <Image Include="..\Assets\Textures\player-2-1.png" />
+    <Image Include="..\Assets\Textures\player-2-2.png" />
+    <Image Include="..\Assets\Textures\PTS.jpg" />
+    <Image Include="..\Assets\Textures\shield.png" />
+    <Image Include="..\Assets\Textures\spawn.png" />
+    <Image Include="..\Assets\Textures\speed.png" />
+    <Image Include="..\Assets\Textures\steel.jpg" />
+    <Image Include="..\Assets\Textures\swim.png" />
+    <Image Include="..\Assets\Textures\tanks_loadscreen.jpg" />
+    <Image Include="..\Assets\Textures\tank_destroy.png" />
+    <Image Include="..\Assets\Textures\tank_icon.png" />
+    <Image Include="..\Assets\Textures\tank_menu.png" />
+    <Image Include="..\Assets\Textures\water.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\Assets\Fonts\DisposableDroidBB_bld.otf" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{73CDADBA-E5E8-4422-A8DA-22F255D28B32}</ProjectGuid>
     <RootNamespace>Tanks</RootNamespace>
+    <ProjectName>Tanks</ProjectName>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -65,17 +171,23 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\.$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir).$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Dependencies\SFML-2.5.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\SFML\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\SFML-2.5.1\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-audio-d.lib;sfml-graphics-d.lib;sfml-main-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -99,13 +211,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\__REPOS\Tanks\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Dependencies\SFML-2.5.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\__REPOS\Tanks\SFML\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\SFML-2.5.1\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-audio.lib;sfml-graphics.lib;sfml-main.lib;sfml-network.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -126,55 +238,6 @@
       <AdditionalDependencies>sfml-audio.lib;sfml-graphics.lib;sfml-main.lib;sfml-network.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="AnimateElement.cpp" />
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Construction.cpp" />
-    <ClCompile Include="DataBase.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="FSM.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GUI.cpp" />
-    <ClCompile Include="Level.cpp" />
-    <ClCompile Include="MapElement.cpp" />
-    <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="MyThread.cpp" />
-    <ClCompile Include="MyWindow.cpp" />
-    <ClCompile Include="Node.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PowerUp.cpp" />
-    <ClCompile Include="RenderElement.cpp" />
-    <ClCompile Include="Source.cpp" />
-    <ClCompile Include="State.cpp" />
-    <ClCompile Include="Tank.cpp" />
-    <ClCompile Include="Task.cpp" />
-    <ClCompile Include="ThreadManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AnimateElement.h" />
-    <ClInclude Include="arus.h" />
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Construction.h" />
-    <ClInclude Include="DataBase.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="FSM.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GUI.h" />
-    <ClInclude Include="Level.h" />
-    <ClInclude Include="MapElement.h" />
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="MyThread.h" />
-    <ClInclude Include="MyWindow.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="PowerUp.h" />
-    <ClInclude Include="RenderElement.h" />
-    <ClInclude Include="ResourceHolder.h" />
-    <ClInclude Include="State.h" />
-    <ClInclude Include="Tank.h" />
-    <ClInclude Include="Task.h" />
-    <ClInclude Include="ThreadManager.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

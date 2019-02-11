@@ -15,5 +15,5 @@ ThreadManager::~ThreadManager()
 
 void ThreadManager::addTask(const Task & task)
 {
-	threads.emplace_back(task);
+	//threads.emplace_back(task);
 }

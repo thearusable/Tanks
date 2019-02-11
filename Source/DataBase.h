@@ -61,8 +61,9 @@ class DataBase
 {
 public:
 
-	~DataBase();
-	//void loadFont();
+	DataBase() = default;
+	~DataBase() = default;
+
 	void load();
 
 	//using to get texture (param: arus::Textures)
@@ -72,18 +73,8 @@ public:
 	//using to get Configuration
 	Stats& getStats();
 
-	
-
-	bool isFullyLoaded();
-	void interrupt();
-
 private:
-	void loadMenuItems(); 
 	void loadResources(); //ladowanie zasobow
-
-	std::mutex mu;
-	//std::thread* thread;
-	MyThread* myThread;
 
 	bool allLoaded = false;
 	Stats stats;

@@ -172,11 +172,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)$(Configuration)\.$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\Builds\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\Builds\$(Configuration)\.$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir).$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\Builds\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\Builds\$(Configuration)\.$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -184,12 +185,24 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)\Dependencies\SFML-2.5.1\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\SFML-2.5.1\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-audio-d.lib;sfml-graphics-d.lib;sfml-main-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y /V  "$(SolutionDir)Dependencies\SFML-2.5.1\bin\openal32.dll" /B  "$(SolutionDir)Builds\$(Configuration)\openal32.dll" /B 
+copy /Y /V  "$(SolutionDir)Dependencies\SFML-2.5.1\bin\sfml-graphics-d-2.dll" /B  "$(SolutionDir)Builds\$(Configuration)\sfml-graphics-d-2.dll" /B  
+copy /Y /V  "$(SolutionDir)Dependencies\SFML-2.5.1\bin\sfml-system-d-2.dll" /B  "$(SolutionDir)Builds\$(Configuration)\sfml-system-d-2.dll" /B
+copy /Y /V  "$(SolutionDir)Dependencies\SFML-2.5.1\bin\sfml-window-d-2.dll" /B  "$(SolutionDir)Builds\$(Configuration)\sfml-window-d-2.dll" /B
+
+rd /s /q "$(SolutionDir)Builds\$(Configuration)\Data\" 2&gt; nul
+robocopy $(SolutionDir)Assets\  $(SolutionDir)Builds\$(Configuration)\Data\  /e /nfl /ndl /njh /njs /ns /nc /np
+EXIT /B 0</Command>
+      <Message>copy dependencies</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -212,14 +225,28 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)\Dependencies\SFML-2.5.1\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)\Dependencies\SFML-2.5.1\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-audio.lib;sfml-graphics.lib;sfml-main.lib;sfml-network.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-system.lib;sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y /V  "$(SolutionDir)Dependencies\SFML-2.5.1\bin\openal32.dll" /B  "$(SolutionDir)Builds\$(Configuration)\openal32.dll" /B 
+copy /Y /V  "$(SolutionDir)Dependencies\SFML-2.5.1\bin\sfml-graphics-2.dll" /B  "$(SolutionDir)Builds\$(Configuration)\sfml-graphics-2.dll" /B  
+copy /Y /V  "$(SolutionDir)Dependencies\SFML-2.5.1\bin\sfml-system-2.dll" /B  "$(SolutionDir)Builds\$(Configuration)\sfml-system-2.dll" /B
+copy /Y /V  "$(SolutionDir)Dependencies\SFML-2.5.1\bin\sfml-window-2.dll" /B  "$(SolutionDir)Builds\$(Configuration)\sfml-window-2.dll" /B
+
+rd /s /q "$(SolutionDir)Builds\$(Configuration)\Data\" 2&gt; nul
+robocopy $(SolutionDir)Assets\  $(SolutionDir)Builds\$(Configuration)\Data\  /e /nfl /ndl /njh /njs /ns /nc /np
+EXIT /B 0</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>copy dependencies</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

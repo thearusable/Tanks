@@ -203,6 +203,10 @@ robocopy $(SolutionDir)Assets\  $(SolutionDir)Builds\$(Configuration)\Data\  /e 
 EXIT /B 0</Command>
       <Message>copy dependencies</Message>
     </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

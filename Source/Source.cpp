@@ -28,8 +28,6 @@ void main(){
 			, window.getSize().y / 2.f - loading.getLocalBounds().height / 2.f);
 		window.draw(loading);
 		window.display();
-
-		DATABASE.load();
 	}
 	catch (const char * s) {
 		system("cls");

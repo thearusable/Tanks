@@ -13,7 +13,6 @@ public:
 
 	bool load(typename ID id, const std::string& filename) {
 		// Create and load resource
-		std::cout << "loading - " << filename << std::endl;
 		std::unique_ptr<typename Resource> resource(new typename Resource());
 		if (!resource->loadFromFile(filename)) {
 			std::cout << "FAILED TO LAOD - " << filename << std::endl;
@@ -41,7 +40,7 @@ public:
 	}
 
 private:
-	void insertResource(typename ID id, std::unique_ptr<typename Resource> resource) {
+	void insertResource(typename ID id, std::unique_ptr<typename Resource>&& resource) {
 		// Insert and check success
 		auto inserted = mResourceMap.insert(std::make_pair(id, std::move(resource)));
 		assert(inserted.second);

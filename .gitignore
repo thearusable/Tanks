@@ -1,7 +1,23 @@
+# FOR KARAKAN ENGINE
+Karakan/.Debug/*
+Karakan/.Release/*
+Karakan/.vs/*
+Karakan/__old/*
+Karakan/Builds/*
+Karakan/x64/*
+
+# FOR TANKS GAME
+
+Tanks/x64/*
+
 .Debug/*
 .Release/*
 .vs/*
 __old/*
 Builds/*
+x64/*
+
 
 *.pdb
+
+

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.329
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tanks", "Tanks\Tanks.vcxproj", "{73CDADBA-E5E8-4422-A8DA-22F255D28B32}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Karakan", "Karakan\Karakan.vcxproj", "{020ADA3F-1630-4F13-AB39-555C485F3C21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{73CDADBA-E5E8-4422-A8DA-22F255D28B32}.Release|x64.Build.0 = Release|x64
 		{73CDADBA-E5E8-4422-A8DA-22F255D28B32}.Release|x86.ActiveCfg = Release|Win32
 		{73CDADBA-E5E8-4422-A8DA-22F255D28B32}.Release|x86.Build.0 = Release|Win32
+		{020ADA3F-1630-4F13-AB39-555C485F3C21}.Debug|x64.ActiveCfg = Debug|x64
+		{020ADA3F-1630-4F13-AB39-555C485F3C21}.Debug|x64.Build.0 = Debug|x64
+		{020ADA3F-1630-4F13-AB39-555C485F3C21}.Debug|x86.ActiveCfg = Debug|Win32
+		{020ADA3F-1630-4F13-AB39-555C485F3C21}.Debug|x86.Build.0 = Debug|Win32
+		{020ADA3F-1630-4F13-AB39-555C485F3C21}.Release|x64.ActiveCfg = Release|x64
+		{020ADA3F-1630-4F13-AB39-555C485F3C21}.Release|x64.Build.0 = Release|x64
+		{020ADA3F-1630-4F13-AB39-555C485F3C21}.Release|x86.ActiveCfg = Release|Win32
+		{020ADA3F-1630-4F13-AB39-555C485F3C21}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

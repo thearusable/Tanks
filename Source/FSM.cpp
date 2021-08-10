@@ -21,13 +21,13 @@ void FSM::setCurrentState(int iStateID) {
 State& FSM::getState(int iStateID) {
 	StateMap::iterator it;
 
-	//if (!m_map.empty()){
-	//	it = m_map.find(iStateID);
-	//	if (it != m_map.end()){
-	//		return (*it).second;
-	//	}
-	//}
-	return State(1, 2);
+	if (!m_map.empty()){
+		it = m_map.find(iStateID);
+		if (it != m_map.end()){
+			return (*it).second;
+		}
+	}
+	return it->second;
 }
 
 void FSM::addState(State& pNewState) {

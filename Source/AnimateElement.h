@@ -1,5 +1,6 @@
 #pragma once
-#include "renderelement.h"
+#include "RenderElement.h"
+
 class AnimateElement :
 	public RenderElement
 {

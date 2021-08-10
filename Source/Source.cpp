@@ -1,6 +1,7 @@
 #pragma once
 #include<string>
-#include"DataBase.h"
+#include "DataBase.h"
+#include"../DataBase.h"
 #include"MyWindow.h"
 #include"Menu.h"
 #include "Task.h"
